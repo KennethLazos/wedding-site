@@ -19,3 +19,4 @@
 - Pointed Moments at `images/gallery/1.jpg` through `6.jpg`.
 - Added background music from `audio/background.mp3`, starting at 26 seconds after the seal click, with a Play / Pause control.
 - Moved garden and envelope motion onto HTML layers so mobile browsers render the animation.
+- Drove butterfly flight with JavaScript so iPhone Safari shows movement.

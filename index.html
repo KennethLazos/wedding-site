@@ -52,16 +52,16 @@ a{color:var(--rose-deep)}
 .garden-bokeh i::after{content:"";position:absolute;inset:0;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#fff,#F7E3B5 42%,transparent 72%);opacity:var(--o);
   filter:blur(2px);mix-blend-mode:screen}
-.garden-bf{position:absolute;inset:0}
-.bf{position:absolute;display:block;width:28px;height:auto;margin:0;will-change:transform}
+.garden-bf{position:absolute;inset:0;z-index:4}
+.bf{position:absolute;display:block;width:28px;height:auto;margin:0}
 .bf svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 2px 3px rgba(59,43,49,.18))}
-.bf-1{top:68%;left:6%;animation:fly1 22s linear infinite}
-.bf-2{top:24%;left:72%;animation:fly2 26s linear infinite}
-.bf-3{top:52%;left:42%;animation:fly3 20s linear infinite}
-.bf-4{top:16%;left:18%;animation:fly4 28s linear infinite}
-.bf-5{top:80%;left:58%;width:22px;animation:fly5 24s linear infinite}
-.bf-6{top:36%;left:4%;width:24px;animation:fly6 19s linear infinite}
-.bf-7{top:10%;left:62%;width:20px;animation:fly7 27s linear infinite}
+.bf-1{top:68%;left:6%}
+.bf-2{top:24%;left:72%}
+.bf-3{top:52%;left:42%}
+.bf-4{top:16%;left:18%}
+.bf-5{top:80%;left:58%;width:22px}
+.bf-6{top:36%;left:4%;width:24px}
+.bf-7{top:10%;left:62%;width:20px}
 .wing-l,.wing-r{transform-box:fill-box}
 .wing-l{transform-origin:90% 55%;animation:flapL .32s ease-in-out infinite alternate}
 .wing-r{transform-origin:10% 55%;animation:flapR .32s ease-in-out infinite alternate}
@@ -1080,7 +1080,7 @@ const gardenNarrow=matchMedia("(max-width:860px)").matches;
 const BF_FILLS=[["#F4A7B9","#C4B5E0"],["#F6BE98","#F4A7B9"],["#B7A6E0","#F9D3DB"],["#EE8FA8","#CFC3EE"],["#E8A15A","#F4C4A8"],["#C9A6E8","#F7C4CF"],["#F2A77E","#B7A6E0"]];
 function butterflySvg(n){
   const [a,b]=BF_FILLS[(n-1)%BF_FILLS.length];
-  return `<i class="bf bf-${n}" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></i>`;
+  return `<span class="bf bf-${n}" data-bf="${n}" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>`;
 }
 function paintGarden(root,seed){
   const r=rng(seed);
@@ -1102,6 +1102,47 @@ function paintGarden(root,seed){
   if(petalsLayer) petalsLayer.innerHTML=petals;
 }
 document.querySelectorAll(".garden").forEach((el,i)=>paintGarden(el,70+i*17));
+
+const BF_PATHS=[
+  [[0,0,0,-10],[.2,.22,-.16,14],[.4,.48,-.06,-8],[.6,.28,.14,16],[.8,.06,.08,-12],[1,0,0,-10]],
+  [[0,0,0,8],[.25,-.2,.14,-14],[.5,-.42,.04,10],[.75,-.18,-.12,-8],[1,0,0,8]],
+  [[0,0,0,-4],[.33,.18,-.2,12],[.66,-.16,-.08,-14],[1,0,0,-4]],
+  [[0,0,0,6],[.2,.16,.18,-10],[.45,.36,.08,14],[.7,.1,-.1,-6],[1,0,0,6]],
+  [[0,0,0,-8],[.25,-.24,-.1,12],[.5,-.08,-.22,-14],[.75,.14,-.06,8],[1,0,0,-8]],
+  [[0,0,0,10],[.3,.28,.12,-12],[.55,.12,-.16,16],[.8,.32,.04,-6],[1,0,0,10]],
+  [[0,0,0,-6],[.2,-.14,.2,14],[.5,.18,.16,-10],[.8,-.08,.06,8],[1,0,0,-6]]
+];
+const BF_MS=[22000,26000,20000,28000,24000,19000,27000];
+function samplePath(path,t){
+  let i=0;
+  while(i<path.length-2&&path[i+1][0]<t) i++;
+  const a=path[i],b=path[i+1],span=b[0]-a[0]||1,u=(t-a[0])/span,e=u*u*(3-2*u);
+  return {x:a[1]+(b[1]-a[1])*e,y:a[2]+(b[2]-a[2])*e,r:a[3]+(b[3]-a[3])*e};
+}
+function startButterflies(){
+  if(gardenReduce||window.__bfFly) return;
+  window.__bfFly=true;
+  const layers=[...document.querySelectorAll(".garden-bf")];
+  function frame(now){
+    if(!document.hidden){
+      layers.forEach(layer=>{
+        const w=layer.clientWidth||1,h=layer.clientHeight||1;
+        layer.querySelectorAll(".bf").forEach((el,idx)=>{
+          if(getComputedStyle(el).display==="none") return;
+          const p=samplePath(BF_PATHS[idx],((now+idx*1800)%BF_MS[idx])/BF_MS[idx]);
+          const move="translate3d("+(p.x*w)+"px,"+(p.y*h)+"px,0) rotate("+p.r+"deg)";
+          el.style.transform=move;
+          el.style.webkitTransform=move;
+        });
+      });
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+startButterflies();
+document.addEventListener("touchstart",startButterflies,{once:true,passive:true});
+document.addEventListener("click",startButterflies,{once:true});
 
 (function stampLace(){
   const svg=document.querySelector(".env-lace");
