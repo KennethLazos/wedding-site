@@ -35,20 +35,26 @@ a{color:var(--rose-deep)}
 
 /* ---------- GARDEN SCENE (intro + hero) ---------- */
 .garden{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.garden-photo{position:absolute;inset:-4%;background:url("images/background-floral.jpg") center/cover no-repeat;filter:blur(1px) saturate(1.06)}
+.garden-photo{position:absolute;inset:-4%;background:url("images/background-floral.jpg") center/cover no-repeat;filter:saturate(1.06)}
+@media (min-width:861px){.garden-photo{filter:blur(1px) saturate(1.06)}}
 .garden-wash{position:absolute;inset:0;background:
   radial-gradient(ellipse 80% 60% at 86% 6%,rgba(247,227,181,.48),transparent 55%),
   radial-gradient(ellipse 70% 50% at 8% 92%,rgba(248,220,223,.42),transparent 52%),
   radial-gradient(ellipse 50% 40% at 20% 20%,rgba(196,181,224,.2),transparent 60%),
   linear-gradient(180deg,rgba(242,167,126,.12),rgba(255,250,248,.22) 72%,rgba(255,250,248,.55))}
 .garden-flare{position:absolute;width:min(70vw,640px);height:min(70vw,640px);top:-12%;right:-10%;
+  animation:flare 12s ease-in-out infinite;will-change:transform,opacity;pointer-events:none}
+.garden-flare::after{content:"";position:absolute;inset:0;
   background:radial-gradient(circle,rgba(255,244,214,.78) 0%,rgba(247,227,181,.35) 32%,rgba(242,167,126,.16) 52%,transparent 72%);
-  mix-blend-mode:screen;animation:flare 12s ease-in-out infinite}
-.garden-bokeh i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;
+  mix-blend-mode:screen}
+.garden-bokeh i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);
+  animation:bokeh var(--d) ease-in-out infinite;animation-delay:var(--delay);will-change:transform}
+.garden-bokeh i::after{content:"";position:absolute;inset:0;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#fff,#F7E3B5 42%,transparent 72%);opacity:var(--o);
-  filter:blur(2px);mix-blend-mode:screen;animation:bokeh var(--d) ease-in-out infinite;animation-delay:var(--delay)}
+  filter:blur(2px);mix-blend-mode:screen}
 .garden-bf{position:absolute;inset:0}
-.bf{position:absolute;width:28px;height:auto;overflow:visible;filter:drop-shadow(0 2px 3px rgba(59,43,49,.18))}
+.bf{position:absolute;display:block;width:28px;height:auto;margin:0;will-change:transform}
+.bf svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 2px 3px rgba(59,43,49,.18))}
 .bf-1{top:68%;left:6%;animation:fly1 22s linear infinite}
 .bf-2{top:24%;left:72%;animation:fly2 26s linear infinite}
 .bf-3{top:52%;left:42%;animation:fly3 20s linear infinite}
@@ -65,15 +71,17 @@ a{color:var(--rose-deep)}
     radial-gradient(ellipse 38% 80% at 88% 120%,rgba(196,181,224,.42),transparent 70%),
     radial-gradient(ellipse 55% 70% at 50% 130%,rgba(249,211,219,.5),transparent 62%);
   filter:blur(12px)}
-.garden-petal{position:absolute;width:18px;height:12px;border-radius:70% 30% 70% 30%;
-  background:linear-gradient(140deg,#F4A7B9,#F9D3DB);opacity:.55;filter:blur(1.5px);
-  animation:petal var(--d) linear infinite;animation-delay:var(--delay);left:var(--x);top:var(--y)}
+.garden-petals{position:absolute;inset:0}
+.garden-petal{position:absolute;width:18px;height:12px;left:var(--x);top:var(--y);
+  animation:petal var(--d) linear infinite;animation-delay:var(--delay);will-change:transform}
+.garden-petal::after{content:"";position:absolute;inset:0;border-radius:70% 30% 70% 30%;
+  background:linear-gradient(140deg,#F4A7B9,#F9D3DB);opacity:.55;filter:blur(1.5px)}
+.flora-sway{width:100%;height:100%;transform-origin:30% 40%;animation:sway 12s ease-in-out infinite;will-change:transform}
+.f-tr .flora-sway{animation-delay:-3.5s;transform-origin:70% 40%}
+.f-bl .flora-sway{animation-delay:-7s;transform-origin:30% 70%}
+.f-br .flora-sway{animation-delay:-1.6s;transform-origin:70% 70%}
+.flora-bg .flora-sway{animation-duration:16s}
 g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;transform-origin:center bottom}
-.garden .flora svg,.garden .flora-bg svg{animation:sway 12s ease-in-out infinite;transform-origin:30% 40%}
-.garden .f-tr svg{animation-delay:-3.5s;transform-origin:70% 40%}
-.garden .f-bl svg{animation-delay:-7s;transform-origin:30% 70%}
-.garden .f-br svg{animation-delay:-1.6s;transform-origin:70% 70%}
-.garden .flora-bg svg{animation-duration:16s}
 @keyframes flare{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 @keyframes bokeh{0%,100%{transform:translate(0,0) scale(1);opacity:var(--o)}50%{transform:translate(14px,-16px) scale(1.18);opacity:calc(var(--o)*1.35)}}
 @keyframes sway{0%,100%{transform:rotate(-2.2deg) translateY(0)}50%{transform:rotate(2.6deg) translateY(-6px)}}
@@ -104,7 +112,8 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
 .intro-kicker .script{font-size:72px;color:var(--rose);line-height:1.02;padding:0 .12em;
   text-shadow:0 1px 0 #FFFDF8,0 10px 28px rgba(202,100,146,.22),0 0 24px rgba(255,253,248,.9)}
 @media (max-width:560px){.intro-kicker .script{font-size:48px}.intro-kicker .caps{font-size:18px;letter-spacing:.18em}}
-.env{position:relative;width:min(90vw,520px);aspect-ratio:1.62;perspective:1400px;transform-style:preserve-3d}
+.env{position:relative;width:min(90vw,520px);aspect-ratio:1.62;-webkit-perspective:1400px;perspective:1400px;
+  -webkit-transform-style:preserve-3d;transform-style:preserve-3d}
 .env-back{position:absolute;inset:0;border-radius:6px;background:linear-gradient(165deg,#F5EDD6,#E8D9B0 55%,#DCC896);
   box-shadow:0 22px 48px -18px rgba(90,65,25,.5),0 6px 16px rgba(90,65,25,.14)}
 .env-back::after,.env-front::after,.env-flap::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
@@ -121,9 +130,12 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%)}
 .env-seam{position:absolute;left:50%;top:56%;bottom:7%;width:1px;z-index:3;pointer-events:none;
   background:linear-gradient(rgba(140,110,55,.28),rgba(140,110,55,.04));transform:translateX(-50%)}
-.env-flap{position:absolute;left:0;right:0;top:0;height:62%;z-index:3;transform-origin:top;transition:transform .8s ease, z-index 0s .4s;
+.env-flap{position:absolute;left:0;right:0;top:0;height:62%;z-index:3;transform-origin:top center;
+  -webkit-transform:rotateX(0deg);transform:rotateX(0deg);
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  transition:transform .8s ease, z-index 0s .4s;
   background:linear-gradient(180deg,#F7F0DC 0%,#EFE3C0 42%,#E2D09A 100%);clip-path:polygon(0 0,100% 0,50% 100%);
-  filter:drop-shadow(0 8px 10px rgba(90,70,40,.22))}
+  box-shadow:0 8px 10px rgba(90,70,40,.22)}
 .env-lace{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .env-sprig{position:absolute;left:50%;top:22%;width:54px;height:auto;transform:translateX(-50%);z-index:1;filter:drop-shadow(0 1px 1px rgba(90,70,40,.2))}
 .seal{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);z-index:4;width:84px;height:84px;border:0;border-radius:50%;cursor:pointer;
@@ -139,7 +151,7 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   font-size:.84rem;line-height:1;color:#3B2B31;background:#FFFDF8;padding:12px 22px;border-radius:999px;
   border:1px solid rgba(201,184,146,.75);box-shadow:0 10px 28px -14px rgba(59,43,49,.5),inset 0 1px 0 #fff}
 .intro.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}
-.intro.open .env-flap{transform:rotateX(180deg);z-index:0}
+.intro.open .env-flap{-webkit-transform:rotateX(180deg);transform:rotateX(180deg);z-index:0}
 .intro.open .env-card{transform:translateY(-58%)}
 .intro.open .intro-kicker,.intro.open .intro-hint{opacity:0;transition:opacity .45s ease}
 
@@ -382,8 +394,8 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
   .reveal{opacity:1;transform:none}
-  .garden-flare,.garden-bokeh i,.bf,.wing-l,.wing-r,g.sway,.garden-petal,
-  .garden .flora svg,.garden .flora-bg svg,.gallery figure,.gallery img,.gallery-veil{animation:none !important}
+  .garden-flare,.garden-bokeh i,.bf,.wing-l,.wing-r,g.sway,.garden-petal,.flora-sway,
+  .gallery figure,.gallery img,.gallery-veil{animation:none !important}
   .gallery figure:hover,.gallery figure:hover img{transform:none;filter:none}
 }
 </style>
@@ -430,6 +442,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="flora-bg" data-flora="scatter" data-seed="31"></div>
     <div class="garden-bf"></div>
     <div class="garden-fg"></div>
+    <div class="garden-petals"></div>
   </div>
   <div class="intro-inner">
     <div class="intro-kicker">
@@ -508,6 +521,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="flora f-br" data-flora="corner" data-seed="42"></div>
     <div class="garden-bf"></div>
     <div class="garden-fg"></div>
+    <div class="garden-petals"></div>
   </div>
 
   <div class="invite">
@@ -1056,6 +1070,7 @@ document.querySelectorAll("[data-flora]").forEach(el=>{
   const {W,H,body}=arrangement(el.dataset.flora,+el.dataset.seed||1,!!el.closest(".garden"));
   const svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="${el.dataset.flora==='scatter'?'none':'xMidYMid meet'}" style="width:100%;height:${el.dataset.flora==='scatter'?'100%':'auto'};display:block">${body}</svg>`;
   if(el.tagName.toLowerCase()==="svg"){el.setAttribute("viewBox",`0 0 ${W} ${H}`);el.innerHTML=body}
+  else if(el.closest(".garden")) el.innerHTML=`<div class="flora-sway">${svg}</div>`;
   else el.innerHTML=svg;
 });
 
@@ -1065,7 +1080,7 @@ const gardenNarrow=matchMedia("(max-width:860px)").matches;
 const BF_FILLS=[["#F4A7B9","#C4B5E0"],["#F6BE98","#F4A7B9"],["#B7A6E0","#F9D3DB"],["#EE8FA8","#CFC3EE"],["#E8A15A","#F4C4A8"],["#C9A6E8","#F7C4CF"],["#F2A77E","#B7A6E0"]];
 function butterflySvg(n){
   const [a,b]=BF_FILLS[(n-1)%BF_FILLS.length];
-  return `<svg class="bf bf-${n}" viewBox="0 0 50 40" aria-hidden="true"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg>`;
+  return `<i class="bf bf-${n}" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="${a}" fill-opacity=".88"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="${b}" fill-opacity=".82"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></i>`;
 }
 function paintGarden(root,seed){
   const r=rng(seed);
@@ -1079,12 +1094,12 @@ function paintGarden(root,seed){
   const bf=root.querySelector(".garden-bf");
   bf.innerHTML=[1,2,3,4,5,6,7].map(butterflySvg).join("");
   if(gardenReduce) return;
-  const fg=root.querySelector(".garden-fg");
+  const petalsLayer=root.querySelector(".garden-petals");
   let petals="";
   for(let i=0;i<6;i++){
     petals+=`<i class="garden-petal" style="--x:${(8+r()*84).toFixed(1)}%;--y:${(-8+r()*20).toFixed(1)}%;--d:${(14+r()*10).toFixed(1)}s;--delay:${(-r()*12).toFixed(1)}s"></i>`;
   }
-  fg.insertAdjacentHTML("beforeend",petals);
+  if(petalsLayer) petalsLayer.innerHTML=petals;
 }
 document.querySelectorAll(".garden").forEach((el,i)=>paintGarden(el,70+i*17));
 
