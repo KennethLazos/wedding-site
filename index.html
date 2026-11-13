@@ -19,7 +19,7 @@
   --wrap:1080px; --r:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{background:var(--paper);color:var(--ink);font:500 1.12rem/1.7 var(--serif);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body.locked{overflow:hidden}
 img{max-width:100%;display:block}
@@ -138,11 +138,12 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   box-shadow:0 8px 10px rgba(90,70,40,.22)}
 .env-lace{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .env-sprig{position:absolute;left:50%;top:22%;width:54px;height:auto;transform:translateX(-50%);z-index:1;filter:drop-shadow(0 1px 1px rgba(90,70,40,.2))}
-.seal{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);z-index:4;width:84px;height:84px;border:0;border-radius:50%;cursor:pointer;
+.seal{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);z-index:4;width:96px;height:96px;border:0;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;padding:0;
   background:radial-gradient(circle at 34% 28%,#FFFBF2,#F3E9D0 42%,#E4D4B0 70%,#CDB892);
-  color:#6B5428;font:400 1.75rem/1 var(--script);
   box-shadow:inset 0 2px 4px rgba(255,255,255,.75),inset 0 -8px 12px rgba(140,110,60,.28),0 8px 16px -6px rgba(90,70,40,.45);
   transition:transform .35s ease,opacity .4s}
+.seal img{position:relative;z-index:1;width:52px;height:auto;pointer-events:none}
 .seal::before{content:"";position:absolute;inset:-5px;border-radius:48% 52% 47% 53%/52% 48% 54% 46%;background:inherit;z-index:-1;opacity:.95;
   box-shadow:0 2px 4px rgba(90,70,40,.2)}
 .seal::after{content:"";position:absolute;inset:11px;border-radius:50%;border:1px solid rgba(154,127,78,.38);box-shadow:inset 0 0 0 4px rgba(255,250,235,.18)}
@@ -155,12 +156,47 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
 .intro.open .env-card{transform:translateY(-58%)}
 .intro.open .intro-kicker,.intro.open .intro-hint{opacity:0;transition:opacity .45s ease}
 
+/* ---------- FIRST LOAD ---------- */
+.loader{position:fixed;inset:0;z-index:220;display:grid;place-items:center;align-content:center;gap:22px;
+  background:var(--paper);transition:opacity .7s ease,visibility .7s ease}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mark{position:relative;width:260px;height:240px;display:grid;place-items:center}
+.loader-logo{position:relative;z-index:1;width:112px;height:auto}
+.loader-bf{position:absolute;left:50%;top:50%;z-index:2;width:58px;margin:-22px 0 0 -29px;
+  animation:loader-flutter 4.2s ease-in-out infinite}
+.loader-bf-2{width:44px;margin:-16px 0 0 -22px;animation-name:loader-flutter-l;animation-duration:3.4s;animation-delay:-.6s}
+.loader-bf-3{width:48px;margin:-18px 0 0 -24px;animation-name:loader-flutter-r;animation-duration:4.8s;animation-delay:-1.8s}
+.loader-bf svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 2px 3px rgba(59,43,49,.16))}
+@keyframes loader-flutter{
+  0%{transform:translate(-96px,-116px) rotate(-16deg)}
+  35%{transform:translate(8px,-134px) rotate(2deg)}
+  70%{transform:translate(102px,-112px) rotate(14deg)}
+  100%{transform:translate(-96px,-116px) rotate(-16deg)}
+}
+@keyframes loader-flutter-l{
+  0%{transform:translate(-148px,40px) rotate(-22deg)}
+  50%{transform:translate(-162px,-36px) rotate(8deg)}
+  100%{transform:translate(-148px,40px) rotate(-22deg)}
+}
+@keyframes loader-flutter-r{
+  0%{transform:translate(150px,-28px) rotate(18deg)}
+  50%{transform:translate(136px,48px) rotate(-12deg)}
+  100%{transform:translate(150px,-28px) rotate(18deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .loader,.loader.done{transition:none}
+  .loader-bf{animation:none;transform:translate(0,-124px)}
+  .loader-bf-2{transform:translate(-146px,8px)}
+  .loader-bf-3{transform:translate(146px,24px)}
+}
+
 /* ---------- NAV ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,250,248,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
   transform:translateY(-100%);transition:transform .4s ease}
 .nav.show{transform:none}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.nav-mark{font:400 1.7rem/1 var(--script);color:var(--rose);text-decoration:none}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-mark{display:flex;align-items:center;line-height:0;text-decoration:none}
+.nav-mark img{width:46px;height:auto}
 .nav ul{display:flex;gap:22px;list-style:none;align-items:center}
 .nav ul a{font-family:var(--caps);font-weight:600;letter-spacing:.12em;color:var(--ink);text-decoration:none;font-size:.95rem;font-variant:small-caps}
 .nav ul a:hover{color:var(--rose)}
@@ -169,7 +205,7 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
 .nav-toggle{display:none;background:none;border:0;width:40px;height:40px;cursor:pointer;color:var(--ink)}
 @media (max-width:860px){
   .nav-toggle{display:block}
-  .nav ul{position:absolute;top:60px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);display:none;padding:8px 0 16px}
+  .nav ul{position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);display:none;padding:8px 0 16px}
   .nav ul.open{display:flex}
   .nav ul li{width:100%;text-align:center}
   .nav ul a{display:block;padding:10px}
@@ -189,7 +225,8 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   /* slightly deckled paper edge */
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M1 .6 L99 0 L100 99.4 L0 100Z'/%3E%3C/svg%3E") center/100% 100%;
 }
-.crest{width:92px;margin:0 auto 18px}
+.crest{display:block;width:92px;height:auto;margin:0 auto 18px}
+footer .crest{width:64px;margin:0 auto 10px}
 .invite .lead{font-style:italic;font-size:1.05rem;color:var(--ink);max-width:34ch;margin:0 auto}
 .names{margin:14px 0 10px}
 .names .script{display:block;font-size:clamp(3rem,11vw,4.6rem)}
@@ -220,21 +257,27 @@ section.block.alt{background:#fff}
 .sep{height:18px;background:repeating-linear-gradient(90deg,var(--blush) 0 12px,transparent 12px 26px);opacity:.8}
 
 /* story */
-.story{position:relative;max-width:760px;margin:0 auto;display:grid;gap:40px}
+.story{position:relative;max-width:1000px;margin:0 auto;display:grid;gap:48px}
 .story::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:1px;background:var(--line)}
 .chapter{display:grid;grid-template-columns:1fr 40px 1fr;align-items:start}
-.chapter .dot{width:14px;height:14px;border-radius:50%;background:var(--rose);margin:10px auto 0;box-shadow:0 0 0 6px var(--paper)}
-.chapter .txt{padding:0 8px}
+.chapter .dot{position:relative;z-index:1;width:16px;height:16px;border-radius:50%;background:var(--rose);margin:4px auto 0;box-shadow:0 0 0 7px var(--paper)}
+.chapter .txt{padding:0 18px}
 .chapter:nth-child(odd) .txt{grid-column:1;text-align:right}
 .chapter:nth-child(odd) .dot{grid-column:2;grid-row:1}
 .chapter:nth-child(even) .txt{grid-column:3}
 .chapter:nth-child(even) .dot{grid-column:2;grid-row:1}
-.chapter h3{font:400 2rem/1.1 var(--script);color:var(--rose)}
-.chapter .yr{display:block}
+.chapter h3{font:400 clamp(1.75rem,3.4vw,2.15rem)/1.2 var(--script);color:var(--rose)}
+.chapter .yr{display:block;margin-bottom:8px;font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:.14em;line-height:1;color:var(--rose-deep);font-variant:normal;text-transform:none}
+.chapter p + p{margin-top:.7em}
+.chapter .yes{margin:.55em 0 .15em;font:400 1.85rem/1.25 var(--script);color:var(--rose)}
+.story-close{max-width:680px;margin:64px auto 0;text-align:center}
+.story-close h3{font:400 clamp(2.2rem,6vw,3.1rem)/1.25 var(--script);color:var(--rose);margin-bottom:16px}
+.story-close p + p{margin-top:.85em}
+.story-close .note{margin-top:1.15em;font-style:italic;color:var(--muted)}
 @media (max-width:640px){
-  .story::before{left:7px}
+  .story::before{left:8px}
   .chapter{grid-template-columns:28px 1fr}
-  .chapter .dot{grid-column:1 !important;margin:10px 0 0}
+  .chapter .dot{grid-column:1 !important;margin:4px 0 0}
   .chapter .txt{grid-column:2 !important;text-align:left !important}
 }
 
@@ -317,31 +360,64 @@ section.block.alt{background:#fff}
 }
 @media (max-width:560px){.ent .pair{grid-template-columns:1fr}}
 
-/* gallery */
-.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
-.gallery figure{position:relative;border-radius:12px;overflow:hidden;background:var(--blush-2);
-  box-shadow:0 10px 28px -20px rgba(59,43,49,.4);transition:transform .45s ease,box-shadow .45s ease}
-.gallery figure:nth-child(1){grid-column:span 2;grid-row:span 2}
-.gallery figure:nth-child(4){grid-row:span 2}
-.gallery-tile{position:absolute;inset:0;display:block;cursor:zoom-in}
-.gallery img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);
-  transition:transform .85s cubic-bezier(.2,.7,.2,1),filter .5s ease}
-.gallery figure:hover{transform:translateY(-4px);box-shadow:0 22px 40px -22px rgba(158,61,104,.5)}
-.gallery figure:hover img{transform:scale(1.1);filter:saturate(1.08) contrast(1.03)}
-.gallery-veil{position:absolute;inset:0;pointer-events:none;opacity:0;
-  background:linear-gradient(180deg,transparent 50%,rgba(59,43,49,.38));
-  box-shadow:inset 0 0 0 0 rgba(255,253,248,0);transition:opacity .4s ease,box-shadow .4s ease}
-.gallery figure:hover .gallery-veil{opacity:1;box-shadow:inset 0 0 0 2px rgba(255,253,248,.42)}
-.gallery .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted);font-style:italic;
-  background:repeating-linear-gradient(90deg,var(--blush-2) 0 12px,#fff 12px 26px)}
-.gallery .ph svg{width:44px;margin:0 auto 6px;opacity:.7}
-@media (max-width:700px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}.gallery figure:nth-child(4){grid-row:span 1}}
-.lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;
-  background:rgba(50,49,49,.82);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
+/* gallery carousel */
+.carousel{position:relative}
+.carousel-stage{position:relative;width:min(92vw,540px);margin-inline:auto}
+.carousel-stage:has(.carousel-slide.is-active img[width="1600"]){width:min(94vw,880px)}
+.carousel-viewport{overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.carousel-viewport.is-dragging{cursor:grabbing}
+.carousel-track{display:flex;align-items:center;gap:20px;width:max-content;padding:18px 0 8px;
+  transition:transform .7s cubic-bezier(.22,.7,.2,1)}
+.carousel-slide{flex:none;display:flex;opacity:.5;transform:scale(.9);transform-origin:center;
+  transition:opacity .55s ease,transform .55s ease}
+.carousel-slide.is-active{opacity:1;transform:none}
+.carousel-slide button{display:block;border:0;padding:0;background:none;cursor:zoom-in;line-height:0;border-radius:18px}
+.carousel-slide img{height:auto;width:auto;max-height:min(62vh,520px);max-width:min(78vw,680px);
+  border-radius:18px;display:block;pointer-events:none;
+  box-shadow:0 18px 40px -26px rgba(59,43,49,.55)}
+.carousel-slide.is-active img{box-shadow:0 28px 50px -24px rgba(158,61,104,.55)}
+.carousel-btn{position:absolute;top:50%;z-index:2;width:48px;height:48px;margin-top:-18px;border:0;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--rose-deep);background:#fff;
+  box-shadow:0 10px 24px -12px rgba(59,43,49,.55),inset 0 0 0 1px var(--line);transition:background .2s,color .2s,transform .2s}
+.carousel-btn.prev{left:14px}.carousel-btn.next{right:14px}
+.carousel-btn:hover{background:var(--rose);color:#fff}
+.carousel-foot{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;padding:0 20px}
+.carousel-count,.carousel-total{font-family:var(--caps);font-weight:600;letter-spacing:.16em;font-size:.9rem;
+  color:var(--rose-deep);font-variant-numeric:tabular-nums;min-width:2.4ch}
+.carousel-bar{width:min(240px,42vw);height:2px;background:var(--line);border-radius:99px;overflow:hidden}
+.carousel-bar span{display:block;height:100%;width:0;background:var(--rose);transition:width .45s ease}
+.carousel-thumbs{display:flex;gap:8px;overflow-x:auto;max-width:var(--wrap);margin:16px auto 0;padding:4px 20px 2px;
+  scrollbar-width:none}
+.carousel-thumbs::-webkit-scrollbar{display:none}
+.carousel-thumbs button{flex:none;height:62px;padding:0;border:0;border-radius:8px;overflow:hidden;cursor:pointer;
+  opacity:.48;background:none;line-height:0;scroll-snap-align:center;box-shadow:inset 0 0 0 0 var(--rose);transition:opacity .3s,box-shadow .3s}
+.carousel-thumbs button.is-active{opacity:1;box-shadow:inset 0 0 0 2px var(--rose)}
+.carousel-thumbs img{height:62px;width:auto;max-width:none;display:block}
+@media (max-width:700px){
+  .carousel-btn{width:42px;height:42px}
+  .carousel-btn.prev{left:8px}.carousel-btn.next{right:8px}
+  .carousel-slide img{max-height:58vh;max-width:84vw}
+}
+.lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:72px 70px 64px;
+  background:rgba(50,49,49,.86);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s}
 .lightbox.open{opacity:1;visibility:visible}
-.lightbox img{max-width:min(94vw,960px);max-height:88vh;border-radius:12px;box-shadow:0 28px 70px -20px rgba(0,0,0,.55)}
-.lightbox-close{position:absolute;top:16px;right:18px;border:0;background:rgba(255,253,248,.92);color:var(--ink);
+.lightbox img{position:relative;z-index:1;max-width:min(88vw,1000px);max-height:min(78vh,calc(100vh - 160px));border-radius:12px;
+  box-shadow:0 28px 70px -20px rgba(0,0,0,.55)}
+.lightbox-close{position:absolute;top:16px;right:18px;z-index:2;border:0;background:rgba(255,253,248,.92);color:var(--ink);
   font:600 .85rem/1 var(--caps);letter-spacing:.14em;padding:10px 14px;border-radius:99px;cursor:pointer}
+.lightbox-nav{position:absolute;top:50%;z-index:2;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--ink);background:rgba(255,253,248,.92)}
+.lightbox-nav.prev{left:16px}.lightbox-nav.next{right:16px}
+.lightbox-nav:hover,.lightbox-close:hover{background:#fff;color:var(--rose-deep)}
+.lightbox-count{position:absolute;left:0;right:0;bottom:22px;z-index:2;text-align:center;color:#fff;
+  font-family:var(--caps);font-weight:600;letter-spacing:.16em;font-size:.85rem;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+body:has(.lightbox.open) .carousel-btn{visibility:hidden}
+@media (max-width:700px){
+  .lightbox{padding:64px 12px 56px}
+  .lightbox-nav.prev{left:8px}.lightbox-nav.next{right:8px}
+}
 
 /* gifts + faq */
 .gift{max-width:640px;margin:0 auto;text-align:center;font-size:1.12rem}
@@ -357,15 +433,21 @@ section.block.alt{background:#fff}
 /* rsvp */
 .rsvp-card{position:relative;max-width:640px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,5vw,44px)}
 .field{display:grid;gap:6px;margin-bottom:18px}
-.field label,.field legend{font-family:var(--caps);font-weight:600;letter-spacing:.12em;font-size:.9rem;color:var(--muted)}
+[hidden]{display:none !important}
+.field label,.field legend,.field-label{font-family:var(--caps);font-weight:600;letter-spacing:.12em;font-size:.9rem;color:var(--muted)}
 .field input,.field select,.field textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px 14px;width:100%}
 .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--rose);outline-offset:1px;border-color:transparent}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row2:has(> [hidden]){grid-template-columns:1fr}
 fieldset.field{border:0}
 .choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
 .choice label{font:inherit;letter-spacing:0;color:var(--ink);display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;background:var(--paper)}
 .choice input{accent-color:var(--rose);width:18px;height:18px}
 .choice label:has(input:checked){border-color:var(--rose);background:#FDF0F3}
+.name-list{display:grid;gap:10px}
+.name-list .field{margin-bottom:0}
+.field-note{font-family:var(--serif);font-weight:400;letter-spacing:0;font-size:1.02rem;line-height:1.55;color:var(--muted)}
+.field-note em{font-style:italic;color:var(--ink)}
 .hp{position:absolute;left:-9999px}
 .form-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:8px}
 .status{font-style:italic}
@@ -394,20 +476,28 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
   .reveal{opacity:1;transform:none}
-  .garden-flare,.garden-bokeh i,.bf,.wing-l,.wing-r,g.sway,.garden-petal,.flora-sway,
-  .gallery figure,.gallery img,.gallery-veil{animation:none !important}
-  .gallery figure:hover,.gallery figure:hover img{transform:none;filter:none}
+  .garden-flare,.garden-bokeh i,.bf,.wing-l,.wing-r,g.sway,.garden-petal,.flora-sway{animation:none !important}
+  .carousel-track,.carousel-slide,.carousel-bar span{transition:none !important}
 }
 </style>
 </head>
 <body class="locked">
+<div class="loader" id="loader" role="status" aria-live="polite" aria-label="The invitation is loading">
+  <div class="loader-mark">
+    <img class="loader-logo" src="images/logo/crest.png" alt="">
+    <span class="loader-bf" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#F4A7B9" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#C4B5E0" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#F4A7B9" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#C4B5E0" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+    <span class="loader-bf loader-bf-2" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+    <span class="loader-bf loader-bf-3" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+  </div>
+</div>
+<script>window.__loaderAt=Date.now()</script>
 <audio id="bgMusic" preload="metadata" src="audio/background.mp3"></audio>
 <button class="music-btn" id="musicBtn" type="button" aria-label="Play music" aria-pressed="false">
   <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
   <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
 </button>
 
-<!-- Shared SVG defs: watercolor filter + crest -->
+<!-- Shared SVG defs: watercolor filter -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <filter id="wc" x="-10%" y="-10%" width="120%" height="120%">
@@ -415,20 +505,6 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
       <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
       <feGaussianBlur stdDeviation="0.35"/>
     </filter>
-    <symbol id="crest" viewBox="0 0 120 140">
-      <g fill="none" stroke="#C8336E" stroke-width="1.6" stroke-linecap="round">
-        <path d="M60 14 C44 22 26 20 18 18 C18 70 22 104 60 128 C98 104 102 70 102 18 C94 20 76 22 60 14Z"/>
-        <path d="M60 22 C47 28 33 27 25 26 C25 70 30 98 60 119 C90 98 95 70 95 26 C87 27 73 28 60 22Z" stroke-width=".8"/>
-        <path d="M48 12 L52 4 L56 10 L60 2 L64 10 L68 4 L72 12" stroke-width="1.3"/>
-        <g stroke-width="1">
-          <path d="M28 40 q-6 18 2 40 q6 16 18 26"/><path d="M92 40 q6 18 -2 40 q-6 16 -18 26"/>
-          <path d="M27 50 q-6 -2 -8 -8 M26 62 q-7 0 -10 -6 M28 74 q-6 2 -10 -3 M33 86 q-5 4 -10 1"/>
-          <path d="M93 50 q6 -2 8 -8 M94 62 q7 0 10 -6 M92 74 q6 2 10 -3 M87 86 q5 4 10 1"/>
-        </g>
-      </g>
-      <text x="53" y="84" text-anchor="middle" font-family="Great Vibes, cursive" font-size="54" fill="#CA6492">E</text>
-      <text x="68" y="92" text-anchor="middle" font-family="Great Vibes, cursive" font-size="54" fill="#CA6492" opacity=".85">J</text>
-    </symbol>
   </defs>
 </svg>
 
@@ -481,7 +557,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           </g>
         </svg>
       </div>
-      <button class="seal" id="seal" aria-label="Open the invitation">JE</button>
+      <button class="seal" id="seal" aria-label="Open the invitation"><img src="images/logo/crest.png" alt=""></button>
     </div>
     <p class="intro-hint">Click the seal to open</p>
   </div>
@@ -490,7 +566,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav" aria-label="Main">
   <div class="wrap">
-    <a href="#top" class="nav-mark">E &amp; J</a>
+    <a href="#top" class="nav-mark" aria-label="E and J"><img src="images/logo/crest.png" alt=""></a>
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navList" aria-label="Menu">
       <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -525,7 +601,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   </div>
 
   <div class="invite">
-    <svg class="crest" viewBox="0 0 120 140" role="img" aria-label="E and J monogram"><use href="#crest"/></svg>
+    <img class="crest" src="images/logo/crest.png" alt="E and J monogram">
     <p class="lead">By the grace of our Almighty God, and with the blessings of their families,</p>
     <h1 class="names">
       <span class="script">John Gerick</span>
@@ -554,31 +630,63 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 <div class="sep" aria-hidden="true"></div>
 
 <!-- ============ OUR STORY ============ -->
-<!-- EDIT: replace the years and text with your own story -->
 <section class="block" id="story">
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="3" aria-hidden="true"></svg>
       <span class="script">Our Story</span>
-      <p>How two paths in Manila became one.</p>
+      <p>Every love story has a beginning. Ours began with a simple hello.</p>
     </div>
     <div class="story">
       <article class="chapter reveal">
-        <div class="txt"><span class="caps yr">20XX</span><h3>How we met</h3><p>Write a few lines about where you first crossed paths: a class, an office, a friend's birthday.</p></div>
+        <div class="txt">
+          <span class="caps yr">2018</span>
+          <h3>Where It All Began</h3>
+          <p>We first met at the office in 2018. What started as simple jokes, playful teasing, and casual conversations slowly turned into something more. Neither of us knew where those little moments would lead, but somehow, we found ourselves looking forward to seeing each other a little more each day. Elena made the first move and pursued John for almost a year. Yes, you read that right—almost a year! Looking back, who would have thought that a simple office connection would eventually turn into a lifetime kind of love?</p>
+        </div>
         <span class="dot"></span>
       </article>
       <article class="chapter reveal">
-        <div class="txt"><span class="caps yr">20XX</span><h3>Our first date</h3><p>Where you went, what you ate, and the moment you knew there'd be a second one.</p></div>
+        <div class="txt">
+          <span class="caps yr">2019</span>
+          <h3>The Beginning of Us</h3>
+          <p>After almost a year of pursuing John, Elena was honestly getting tired and was close to giving up. But just when she thought their story might not go anywhere, John began to realize that he felt the same way. And finally, on August 3, 2019, we officially became a couple. As a little plot twist, John was actually the first to say, “I love you.” Sometimes, love takes a little time to find its way, but when it does, everything falls into place.</p>
+        </div>
         <span class="dot"></span>
       </article>
       <article class="chapter reveal">
-        <div class="txt"><span class="caps yr">20XX</span><h3>Growing together</h3><p>Trips, milestones, and the little rituals that became yours.</p></div>
+        <div class="txt">
+          <span class="caps yr">2020</span>
+          <h3>Learning to Do Life Together</h3>
+          <p>Then came 2020, and the world suddenly slowed down. During the pandemic, we decided to live together. It was a different kind of adventure—one that allowed us to see each other beyond the dates and special occasions. We shared the happy days, the stressful moments, the ordinary routines, and even the little disagreements. We learned that love wasn’t always about grand gestures or exciting moments. Sometimes, it was simply about having someone beside you, making even the most ordinary days feel special. And that was when we realized how much we loved doing life together.</p>
+        </div>
         <span class="dot"></span>
       </article>
       <article class="chapter reveal">
-        <div class="txt"><span class="caps yr">20XX</span><h3>The proposal</h3><p>Where he asked, and how she said yes.</p></div>
+        <div class="txt">
+          <span class="caps yr">2022–2025</span>
+          <h3>Making Memories Along the Way</h3>
+          <p>As the years passed, we found more reasons to explore, travel, and make memories together. From Zambales to Cebu, Davao, Siargao, Bicol, Legazpi, and many other places, we enjoyed discovering new destinations and experiencing little adventures along the way. Some trips were carefully planned, while others happened spontaneously. We collected photographs, stories, laughter, and memories that will always have a special place in our hearts. But wherever we went, we learned that the best part was never just the destination—it was having each other along for the journey.</p>
+        </div>
         <span class="dot"></span>
       </article>
+      <article class="chapter reveal">
+        <div class="txt">
+          <span class="caps yr">2026</span>
+          <h3>The Question That Led to Forever</h3>
+          <p>And then came the moment we will always hold close to our hearts. During the In Between concert of TJ Monterde and KZ Tandingan, John surprised Elena with a question that would change our story forever. After all the years of growing together, choosing each other, and experiencing everything in between, John was ready to take the next step.</p>
+          <p class="yes">And Elena said yes.</p>
+          <p>After all, how could she say no to the man she once spent almost a year pursuing? This time, there was no waiting, no guessing, and no more wondering what the future held. Just two hearts, ready to promise each other a lifetime.</p>
+        </div>
+        <span class="dot"></span>
+      </article>
+    </div>
+    <div class="story-close reveal">
+      <h3>And now, our forever begins.</h3>
+      <p>Looking back, we realize that our story was never about having a perfect beginning or a perfect journey. It was about two people who found each other unexpectedly, grew together through the years, and continued choosing one another through every season of life.</p>
+      <p>From those simple office conversations in 2018 to the promise of forever in 2026, every little moment brought us exactly where we are today.</p>
+      <p>And now, as we prepare to write another chapter, we look forward to more laughter, more adventures, more ordinary days made extraordinary, and a lifetime of making memories together.</p>
+      <p class="note">Because our favorite part of the story has always been—and will always be—having each other.</p>
     </div>
   </div>
 </section>
@@ -873,50 +981,72 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
       <span class="script">Moments</span>
       <p>A few of our favorite photos together.</p>
     </div>
-    <div class="gallery reveal" id="galleryGrid">
-      <figure>
-        <a class="gallery-tile" href="images/gallery/5.jpg">
-          <img src="images/gallery/5.jpg" alt="Elena resting her head on Gerick's shoulder">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
-      <figure>
-        <a class="gallery-tile" href="images/gallery/1.jpg">
-          <img src="images/gallery/1.jpg" alt="Elena holding a daisy bouquet, engagement ring in view">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
-      <figure>
-        <a class="gallery-tile" href="images/gallery/2.jpg">
-          <img src="images/gallery/2.jpg" alt="Elena and Gerick standing together with a daisy bouquet">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
-      <figure>
-        <a class="gallery-tile" href="images/gallery/3.jpg">
-          <img src="images/gallery/3.jpg" alt="Daisy bouquet in the foreground, Elena and Gerick softly behind">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
-      <figure>
-        <a class="gallery-tile" href="images/gallery/4.jpg">
-          <img src="images/gallery/4.jpg" alt="Elena and Gerick looking at each other">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
-      
-      <figure>
-        <a class="gallery-tile" href="images/gallery/6.jpg">
-          <img src="images/gallery/6.jpg" alt="Elena and Gerick in warm light, a kiss on the temple">
-          <span class="gallery-veil"></span>
-        </a>
-      </figure>
+  </div>
+  <div class="carousel reveal" id="carousel">
+    <div class="carousel-stage">
+      <button class="carousel-btn prev" id="carouselPrev" type="button" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="carousel-viewport" id="carouselViewport" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Photos of Elena and John Gerick">
+        <div class="carousel-track" id="carouselTrack">
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/1.jpg" width="1067" height="1600" alt="Elena holding a daisy bouquet, engagement ring in view" fetchpriority="high"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/2.jpg" width="1067" height="1600" alt="Elena and Gerick standing together with a daisy bouquet"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/3.jpg" width="1067" height="1600" alt="Daisy bouquet in the foreground, Elena and Gerick softly behind"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/4.jpg" width="1067" height="1600" alt="Elena and Gerick looking at each other" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/5.jpg" width="1067" height="1600" alt="Elena resting her head on Gerick's shoulder" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/6.jpg" width="1066" height="1600" alt="Elena and Gerick in warm light, a kiss on the temple" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-30.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-32.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-51.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-65.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-156.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-171.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-187.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-192.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-195.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-232.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-233.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-237.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-271.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-301.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-330.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-341.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-356.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-380.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-381.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-393.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-396.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-400.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-404.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-406.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-413.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-421.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-425.jpg" width="1067" height="1600" alt="Elena and John Gerick" loading="lazy"></button></figure>
+          <figure class="carousel-slide"><button type="button"><img src="images/gallery/web/RPF-434.jpg" width="1600" height="1067" alt="Elena and John Gerick" loading="lazy"></button></figure>
+        </div>
+      </div>
+      <button class="carousel-btn next" id="carouselNext" type="button" aria-label="Next photo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
     </div>
+    <div class="carousel-foot">
+      <span class="carousel-count" id="carouselCount" aria-live="polite">01</span>
+      <span class="carousel-bar" aria-hidden="true"><span id="carouselBar"></span></span>
+      <span class="carousel-total">34</span>
+    </div>
+    <div class="carousel-thumbs" id="carouselThumbs" aria-label="Choose a photo"></div>
   </div>
 </section>
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox-close" type="button" id="lightboxClose">Close</button>
+  <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
   <img alt="">
+  <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <p class="lightbox-count" id="lightboxCount"></p>
 </div>
 
 <!-- ============ GIFTS ============ -->
@@ -969,16 +1099,53 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
         </div>
         <div class="row2">
           <div class="field"><label for="f-phone">Mobile (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="09XX XXX XXXX"></div>
-          <div class="field"><label for="f-guests">Number of guests</label>
-            <select id="f-guests" name="guests"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+          <div class="field" id="guestCountField" hidden><label for="f-guests">Number of guests</label>
+            <select id="f-guests" name="guests"></select></div>
+        </div>
+        <div class="field" id="guestNamesField" hidden>
+          <span class="field-label">Guest names</span>
+          <div id="guestNames" class="name-list"></div>
         </div>
         <fieldset class="field">
-          <legend>Will you attend?</legend>
+          <legend>Are you attending?</legend>
           <div class="choice">
-            <label><input type="radio" name="attending" value="Yes" required> Joyfully accepts</label>
-            <label><input type="radio" name="attending" value="No"> Regretfully declines</label>
+            <label><input type="radio" name="attending" value="Church Only" required> Church Only</label>
+            <label><input type="radio" name="attending" value="Reception Only"> Reception Only</label>
+            <label><input type="radio" name="attending" value="After Party Only"> After Party Only</label>
+            <label><input type="radio" name="attending" value="All"> All</label>
+            <label><input type="radio" name="attending" value="Unable to attend"> Unable to attend</label>
           </div>
         </fieldset>
+        <div class="field" id="groupField">
+          <label for="f-group">Your group</label>
+          <p class="field-note">To help us organize our wedding reception, kindly <em>select only one option below</em> that corresponds to your group. Your response will help us arrange the tables accordingly. Thank you ♡</p>
+          <select id="f-group" name="group">
+            <option value="">Select your group</option>
+            <option>PRINCIPAL SPONSOR</option>
+            <option>CENTRAL OFFICE (AOCG - etc)</option>
+            <option>POM (CAVITE, PEZA)</option>
+            <option>MICP</option>
+            <option>FAMILY</option>
+            <option>FRIENDS</option>
+          </select>
+        </div>
+        <div id="kidsBlock" hidden>
+          <fieldset class="field" id="kidsYesNo">
+            <legend>Will you bring a child?</legend>
+            <div class="choice">
+              <label><input type="radio" name="bringingKids" value="Yes"> Yes</label>
+              <label><input type="radio" name="bringingKids" value="No"> No</label>
+            </div>
+          </fieldset>
+          <div class="field" id="kidCountField" hidden>
+            <label for="f-kidcount">How many children will you bring?</label>
+            <select id="f-kidcount"></select>
+          </div>
+          <div class="field" id="kidNamesField" hidden>
+            <span class="field-label">Children's names</span>
+            <div id="kidNames" class="name-list"></div>
+          </div>
+        </div>
         <div class="field"><label for="f-diet">Dietary needs (optional)</label><input id="f-diet" name="dietary" placeholder="e.g. no seafood, vegetarian"></div>
         <div class="field"><label for="f-msg">Message for the couple (optional)</label><textarea id="f-msg" name="message" rows="3"></textarea></div>
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -995,7 +1162,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 <footer>
   <div class="flora f-bl" data-flora="corner" data-seed="77" style="position:absolute;width:min(40vw,340px);pointer-events:none"></div>
   <div class="flora f-br" data-flora="corner" data-seed="88" style="position:absolute;width:min(40vw,340px);pointer-events:none"></div>
-  <svg class="crest" viewBox="0 0 120 140" style="width:64px;margin:0 auto 10px" aria-hidden="true"><use href="#crest"/></svg>
+  <img class="crest" src="images/logo/crest.png" alt="">
   <p class="script">We can't wait to celebrate with you</p>
   <p class="tag">#ElenaAndGerick2027</p><!-- EDIT: your hashtag -->
   <small>Ma. Elena &amp; John Gerick · 17 July 2027 · Manila</small>
@@ -1004,7 +1171,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 <script>
 /* ================= CONFIG ================= */
 // Paste your Google Apps Script Web App URL here (see README.md, step 3)
-const RSVP_ENDPOINT = "";
+const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbx_uIiwl-C2Es3e7mo1uN2udewZaxiJmlff9mNyI5xDjLpCjnBvWiK19EYAfX0ZHHyP/exec";
 const WEDDING_DATE = new Date("2027-07-17T13:00:00+08:00");
 
 /* ================= FLORALS (original watercolor-style SVG) ================= */
@@ -1165,9 +1332,30 @@ document.addEventListener("click",startButterflies,{once:true});
   along(384,12,206,132,16);
 })();
 
+/* ================= FIRST LOAD ================= */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const loader=document.getElementById("loader");
+function hideLoader(){
+  if(!loader||loader.classList.contains("done")) return;
+  const elapsed=Date.now()-(window.__loaderAt||Date.now());
+  const hold=Math.max(0,(reduce?180:650)-elapsed);
+  setTimeout(()=>{
+    if(loader.classList.contains("done")) return;
+    loader.classList.add("done");
+    setTimeout(()=>loader.remove(),750);
+  },hold);
+}
+const loaderAssets=["images/background-floral.jpg","images/logo/crest.png"].map(src=>new Promise(resolve=>{
+  const img=new Image();
+  img.onload=img.onerror=resolve;
+  img.src=src;
+}));
+const loaderFonts=document.fonts?document.fonts.ready.catch(()=>{}):Promise.resolve();
+Promise.all([loaderFonts,...loaderAssets]).then(hideLoader);
+setTimeout(hideLoader,6000);
+
 /* ================= ENVELOPE ================= */
 const intro=document.getElementById("intro"), seal=document.getElementById("seal");
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 seal.addEventListener("click",()=>{
   intro.classList.add("open");
   startMusic();
@@ -1226,20 +1414,165 @@ function tick(){
 tick();setInterval(tick,1000);
 
 /* ================= GALLERY ================= */
-const phSVG=`<svg viewBox="0 0 24 24" fill="none" stroke="#C8336E" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg>`;
-document.querySelectorAll("#galleryGrid img").forEach((img,i)=>{
-  img.addEventListener("error",()=>{const f=img.closest("figure");img.remove();f.insertAdjacentHTML("beforeend",`<div class="ph"><div>${phSVG}Photo ${i+1}</div></div>`)});
-  if(img.complete && img.naturalWidth===0) img.dispatchEvent(new Event("error"));
+const carousel=document.getElementById("carousel");
+const viewport=document.getElementById("carouselViewport");
+const track=document.getElementById("carouselTrack");
+const slides=[...track.querySelectorAll(".carousel-slide")];
+const thumbs=document.getElementById("carouselThumbs");
+const countEl=document.getElementById("carouselCount");
+const barEl=document.getElementById("carouselBar");
+const total=slides.length;
+const reduceMotion=matchMedia("(prefers-reduced-motion:reduce)").matches;
+let index=0, timer=null, drag=null, suppressClick=false;
+
+slides.forEach((slide,i)=>{
+  const src=slide.querySelector("img");
+  const btn=document.createElement("button");
+  btn.type="button";
+  btn.setAttribute("aria-label","Show photo "+(i+1));
+  const thumb=document.createElement("img");
+  thumb.alt="";
+  thumb.draggable=false;
+  thumb.loading="lazy";
+  thumb.src=src.getAttribute("src");
+  btn.appendChild(thumb);
+  btn.addEventListener("click",()=>go(i,true));
+  thumbs.appendChild(btn);
+  slide.querySelector("button").setAttribute("aria-label",(src.alt||"Photo "+(i+1))+", view larger");
+  slide.querySelector("button").addEventListener("click",()=>{
+    if(suppressClick) return;
+    if(i!==index) go(i,true);
+    else openLightbox(i);
+  });
 });
+
+function layout(){
+  const slide=slides[index];
+  if(!slide) return;
+  const x=slide.offsetLeft+slide.offsetWidth/2-viewport.clientWidth/2;
+  track.style.transform=`translate3d(${-x}px,0,0)`;
+}
+function render(){
+  slides.forEach((slide,i)=>{
+    const on=i===index;
+    slide.classList.toggle("is-active",on);
+    slide.setAttribute("aria-hidden",on?"false":"true");
+  });
+  [...thumbs.children].forEach((btn,i)=>{
+    const on=i===index;
+    btn.classList.toggle("is-active",on);
+    if(on) btn.setAttribute("aria-current","true");
+    else btn.removeAttribute("aria-current");
+  });
+  countEl.textContent=String(index+1).padStart(2,"0");
+  barEl.style.width=((index+1)/total*100)+"%";
+  layout();
+  const thumb=thumbs.children[index];
+  if(thumb) thumbs.scrollTo({left:thumb.offsetLeft-(thumbs.clientWidth-thumb.offsetWidth)/2,behavior:reduceMotion?"auto":"smooth"});
+}
+function go(i,user){
+  index=(i+total)%total;
+  render();
+  if(user) restart();
+}
+function restart(){
+  clearInterval(timer);
+  if(reduceMotion || lightbox.classList.contains("open")) return;
+  timer=setInterval(()=>go(index+1),5500);
+}
+function stop(){clearInterval(timer);timer=null}
+
+document.getElementById("carouselPrev").addEventListener("click",()=>go(index-1,true));
+document.getElementById("carouselNext").addEventListener("click",()=>go(index+1,true));
+carousel.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();go(index+1,true)}
+  if(e.key==="ArrowLeft"){e.preventDefault();go(index-1,true)}
+});
+function onDragMove(e){
+  if(!drag || e.pointerId!==drag.id) return;
+  const dx=e.clientX-drag.x;
+  if(Math.abs(dx)>8) drag.moved=true;
+  track.style.transform=`translate3d(${drag.tx+dx}px,0,0)`;
+}
+function endDrag(e){
+  if(!drag || e.pointerId!==drag.id) return;
+  const dx=e.clientX-drag.x;
+  const moved=drag.moved;
+  drag=null;
+  document.removeEventListener("pointermove",onDragMove);
+  document.removeEventListener("pointerup",endDrag);
+  document.removeEventListener("pointercancel",endDrag);
+  viewport.classList.remove("is-dragging");
+  track.style.transition="";
+  if(dx<=-48) go(index+1,true);
+  else if(dx>=48) go(index-1,true);
+  else render();
+  if(moved){suppressClick=true;setTimeout(()=>{suppressClick=false},0)}
+  restart();
+}
+viewport.addEventListener("pointerdown",e=>{
+  if(e.pointerType==="mouse" && e.button!==0) return;
+  const matrix=new DOMMatrix(getComputedStyle(track).transform);
+  drag={x:e.clientX,tx:matrix.m41,moved:false,id:e.pointerId};
+  track.style.transition="none";
+  viewport.classList.add("is-dragging");
+  stop();
+  document.addEventListener("pointermove",onDragMove);
+  document.addEventListener("pointerup",endDrag);
+  document.addEventListener("pointercancel",endDrag);
+});
+viewport.addEventListener("mouseenter",stop);
+viewport.addEventListener("mouseleave",restart);
+viewport.addEventListener("focusin",stop);
+viewport.addEventListener("focusout",restart);
+addEventListener("resize",layout);
+slides.forEach(slide=>{
+  const img=slide.querySelector("img");
+  img.draggable=false;
+  if(!img.complete) img.addEventListener("load",layout,{once:true});
+});
+const seen=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting) restart();
+  else stop();
+},{threshold:.45});
+seen.observe(viewport);
+render();
+
 const lightbox=document.getElementById("lightbox"), lightboxImg=lightbox.querySelector("img"), lightboxClose=document.getElementById("lightboxClose");
-function closeLightbox(){lightbox.classList.remove("open");lightbox.hidden=true;document.body.style.overflow=""}
-function openLightbox(src,alt){lightboxImg.src=src;lightboxImg.alt=alt||"";lightbox.hidden=false;lightbox.classList.add("open");document.body.style.overflow="hidden";lightboxClose.focus()}
-document.querySelectorAll("#galleryGrid .gallery-tile").forEach(a=>{
-  a.addEventListener("click",e=>{e.preventDefault();const img=a.querySelector("img");openLightbox(a.href,img?img.alt:"")});
-});
+const lightboxCount=document.getElementById("lightboxCount");
+let lb=0;
+function showLightbox(){
+  const img=slides[lb].querySelector("img");
+  lightboxImg.src=img.currentSrc||img.src;
+  lightboxImg.alt=img.alt||"";
+  lightboxCount.textContent=(lb+1)+" / "+total;
+}
+function openLightbox(i){
+  const first=!lightbox.classList.contains("open");
+  lb=(i+total)%total;
+  showLightbox();
+  lightbox.hidden=false;
+  lightbox.classList.add("open");
+  document.body.style.overflow="hidden";
+  stop();
+  if(first) lightboxClose.focus();
+}
+function closeLightbox(){
+  lightbox.classList.remove("open");
+  lightbox.hidden=true;
+  document.body.style.overflow="";
+  if(viewport.getBoundingClientRect().top<innerHeight && viewport.getBoundingClientRect().bottom>0) restart();
+}
+document.getElementById("lightboxPrev").addEventListener("click",()=>openLightbox(lb-1));
+document.getElementById("lightboxNext").addEventListener("click",()=>openLightbox(lb+1));
 lightboxClose.addEventListener("click",closeLightbox);
 lightbox.addEventListener("click",e=>{if(e.target===lightbox) closeLightbox()});
-addEventListener("keydown",e=>{if(e.key==="Escape" && lightbox.classList.contains("open")) closeLightbox()});
+addEventListener("keydown",e=>{
+  if(!lightbox.classList.contains("open")) return;
+  if(e.key==="Escape") closeLightbox();
+  if(e.key==="ArrowRight"){e.preventDefault();openLightbox(lb+1)}
+  if(e.key==="ArrowLeft"){e.preventDefault();openLightbox(lb-1)}
+});
 
 /* ================= REVEAL ================= */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
@@ -1247,14 +1580,107 @@ document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
 /* ================= RSVP ================= */
 const form=document.getElementById("rsvpForm"), status=document.getElementById("rsvpStatus"), btn=document.getElementById("rsvpBtn");
+const guestCountField=document.getElementById("guestCountField");
+const guestSelect=document.getElementById("f-guests");
+const guestNamesField=document.getElementById("guestNamesField");
+const guestNames=document.getElementById("guestNames");
+const kidsBlock=document.getElementById("kidsBlock");
+const kidsYesNo=document.getElementById("kidsYesNo");
+const kidCountField=document.getElementById("kidCountField");
+const kidCountSelect=document.getElementById("f-kidcount");
+const kidNamesField=document.getElementById("kidNamesField");
+const kidNames=document.getElementById("kidNames");
+const groupField=document.getElementById("groupField");
+const groupSelect=document.getElementById("f-group");
+const invite=new URLSearchParams(location.search);
+function inviteCount(key, fallback, min, max){
+  const n=parseInt(invite.get(key),10);
+  if(!Number.isFinite(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+}
+const maxGuests=inviteCount("max",1,1,12);
+const maxKids=inviteCount("kids",0,0,8);
+
 function setStatus(msg,cls){status.textContent=msg;status.className="status "+(cls||"")}
+function selectedAttending(){return (form.querySelector('input[name="attending"]:checked')||{}).value||""}
+function nameInputs(container, count, label){
+  const kept=[...container.querySelectorAll("input")].map(input=>input.value);
+  container.innerHTML="";
+  for(let i=0;i<count;i++){
+    const wrap=document.createElement("div");
+    wrap.className="field";
+    const lab=document.createElement("label");
+    const input=document.createElement("input");
+    const id=container.id+"-"+i;
+    lab.htmlFor=id;
+    lab.textContent=count===1?label:label+" "+(i+1);
+    input.id=id;
+    input.autocomplete="off";
+    input.value=kept[i]||"";
+    wrap.append(lab, input);
+    container.appendChild(wrap);
+  }
+}
+function kidCount(){
+  if(kidsBlock.hidden) return 0;
+  if(maxKids===1) return 1;
+  return parseInt(kidCountSelect.value,10)||0;
+}
+function syncParty(){
+  const declined=selectedAttending()==="Unable to attend";
+  groupField.hidden=declined;
+  if(declined) groupSelect.value="";
+  const guests=parseInt(guestSelect.value,10)||1;
+  const extra=declined?0:Math.max(0, guests-1);
+  guestNamesField.hidden=extra===0;
+  nameInputs(guestNames, extra, "Guest name");
+  const allowKids=maxKids>0 && !declined;
+  kidsBlock.hidden=!allowKids;
+  kidsYesNo.hidden=true;
+  kidCountField.hidden=maxKids<2;
+  const children=allowKids?kidCount():0;
+  kidNamesField.hidden=children===0;
+  nameInputs(kidNames, children, "Child's name");
+}
+function fillCount(select, max, start){
+  const current=select.value;
+  select.innerHTML="";
+  for(let i=start;i<=max;i++){
+    const option=document.createElement("option");
+    option.value=String(i);
+    option.textContent=String(i);
+    select.appendChild(option);
+  }
+  if(current && select.querySelector('option[value="'+current+'"]')) select.value=current;
+}
+guestCountField.hidden=maxGuests<2;
+fillCount(guestSelect, maxGuests, 1);
+fillCount(kidCountSelect, maxKids, 0);
+guestSelect.addEventListener("change", syncParty);
+kidCountSelect.addEventListener("change", syncParty);
+form.addEventListener("change", e=>{
+  if(e.target.name==="attending" || e.target.name==="bringingKids") syncParty();
+});
+syncParty();
+
 form.addEventListener("submit",async e=>{
   e.preventDefault();
   const data=new FormData(form);
   if(!data.get("name")?.trim()){setStatus("Enter your full name.","err");form.name.focus();return}
   const email=(data.get("email")||"").trim();
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setStatus("Enter a valid email address.","err");form.email.focus();return}
-  if(!data.get("attending")){setStatus("Choose whether you'll attend.","err");return}
+  const attending=selectedAttending();
+  if(!attending){setStatus("Choose where you'll attend.","err");return}
+  if(!groupField.hidden && !groupSelect.value){setStatus("Select the group you belong to.","err");groupSelect.focus();return}
+  const extra=[...guestNames.querySelectorAll("input")];
+  if(extra.some(input=>!input.value.trim())){setStatus("Enter each guest's name.","err");extra.find(input=>!input.value.trim()).focus();return}
+  const children=[...kidNames.querySelectorAll("input")];
+  if(children.some(input=>!input.value.trim())){setStatus("Enter each child's name.","err");children.find(input=>!input.value.trim()).focus();return}
+  data.set("guestNames", extra.map(input=>input.value.trim()).join(", "));
+  data.set("kidNames", children.map(input=>input.value.trim()).join(", "));
+  data.set("children", kidsBlock.hidden?"":(kidCount()?String(kidCount()):"No"));
+  if(groupField.hidden) data.set("group","");
+  if(guestCountField.hidden) data.set("guests","1");
   if(!RSVP_ENDPOINT){setStatus("RSVP isn't connected yet. Add the Apps Script URL in index.html (see README).","err");return}
 
   btn.disabled=true;btn.textContent="Sending…";setStatus("");
@@ -1263,8 +1689,8 @@ form.addEventListener("submit",async e=>{
     const out=await res.json().catch(()=>({ok:res.ok}));
     if(!out.ok) throw new Error(out.error||"Request failed");
     const first=data.get("name").trim().split(" ")[0];
-    const yes=data.get("attending")==="Yes";
-    form.parentElement.innerHTML=`<div class="thanks"><p class="script">Thank you, ${first.replace(/[<>&]/g,"")}!</p><p>${yes?"Your RSVP has been sent. We can't wait to see you on 17 July 2027.":"Your RSVP has been sent. We'll miss you, and thank you for letting us know."}</p></div>`;
+    const coming=attending!=="Unable to attend";
+    form.parentElement.innerHTML=`<div class="thanks"><p class="script">Thank you, ${first.replace(/[<>&]/g,"")}!</p><p>${coming?"Your RSVP has been sent.<br>We can't wait to see you on 17 July 2027.":"Your RSVP has been sent.<br>We'll miss you, and thank you for letting us know."}</p></div>`;
   }catch(err){
     btn.disabled=false;btn.textContent="Send RSVP";
     setStatus("Your RSVP didn't go through. Check your connection and try again.","err");
