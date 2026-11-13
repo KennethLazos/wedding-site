@@ -348,11 +348,12 @@ section.block.alt{background:#fff}
 .sec-woman{text-align:left}
 .sec-role{margin:0;font:400 1.45rem/1 var(--script);color:var(--rose);text-align:center}
 @media (max-width:700px){
-  .sponsors{grid-template-columns:1fr;gap:8px}
+  .sponsors{grid-template-columns:1fr;gap:8px;text-align:center}
   .sponsors-rule{display:none}
-  .sponsors-col:first-of-type{text-align:left}
+  .sponsors-col,.sponsors-col:first-of-type{text-align:center}
   .sponsors-col + .sponsors-col{margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
-  .honor-pair > div:first-child,.honor-pair > div:first-child .sponsors-col{text-align:left}
+  .honor-pair > div:first-child,.honor-pair > div:first-child .sponsors-col,
+  .honor-pair > div:last-child,.honor-pair > div:last-child .sponsors-col{text-align:center}
   .honor-pair > div:last-child{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
   .sec-row{grid-template-columns:1fr;justify-items:center;gap:4px;padding:16px 0;text-align:center}
   .sec-man,.sec-woman{text-align:center}
@@ -472,6 +473,14 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 .music-btn svg{width:20px;height:20px;display:block}
 .music-btn[aria-pressed="true"] .icon-play,.music-btn[aria-pressed="false"] .icon-pause{display:none}
 .music-btn:hover{transform:scale(1.06)}
+.rsvp-float{display:none}
+@media (max-width:860px){
+  .rsvp-float{position:fixed;right:78px;bottom:18px;z-index:40;display:inline-flex;align-items:center;height:48px;padding:0 16px;
+    background:var(--rose);color:#fff;border-radius:99px;text-decoration:none;
+    font-family:var(--caps);font-weight:600;letter-spacing:.12em;font-size:.92rem;font-variant:small-caps;
+    box-shadow:0 8px 22px -10px rgba(59,43,49,.45)}
+  .rsvp-float.is-hidden{display:none}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
@@ -492,6 +501,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
 </div>
 <script>window.__loaderAt=Date.now()</script>
 <audio id="bgMusic" preload="metadata" src="audio/background.mp3"></audio>
+<a href="#rsvp" class="rsvp-float">RSVP</a>
 <button class="music-btn" id="musicBtn" type="button" aria-label="Play music" aria-pressed="false">
   <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
   <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
@@ -1397,6 +1407,12 @@ bgMusic.addEventListener("ended",()=>{bgMusic.currentTime=musicCue();playMusic()
 bgMusic.addEventListener("error",()=>{musicBtn.hidden=true});
 
 /* ================= NAV ================= */
+const rsvpFloat=document.querySelector(".rsvp-float");
+if(rsvpFloat && "IntersectionObserver" in window){
+  new IntersectionObserver(([entry])=>{
+    rsvpFloat.classList.toggle("is-hidden", entry.isIntersecting);
+  },{threshold:.2}).observe(document.getElementById("rsvp"));
+}
 const nav=document.getElementById("nav"), navList=document.getElementById("navList"), tog=document.getElementById("navToggle");
 const onScroll=()=>nav.classList.toggle("show",scrollY>innerHeight*.6);
 addEventListener("scroll",onScroll,{passive:true});onScroll();
