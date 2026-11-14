@@ -16,11 +16,11 @@ function doPost(e) {
   try {
     const p = (e && e.parameter) || {};
     if (p.website) return json({ ok: true });            // spam honeypot
-    if (!p.name || !p.email || !p.attending) return json({ ok: false, error: 'Missing required fields' });
+    if (!p.name || !p.attending) return json({ ok: false, error: 'Missing required fields' });
 
     const ss = getSpreadsheet();
     const sh = ensureSheet(ss);
-    const row = [new Date(), p.name, p.email, p.phone || '', p.attending, p.guests || '1', p.guestNames || '', p.children || '', p.kidNames || '', p.group || '', p.dietary || '', p.message || ''];
+    const row = [new Date(), p.name, p.email || '', p.phone || '', p.attending, p.guests || '1', p.guestNames || '', p.children || '', p.kidNames || '', p.group || '', p.dietary || '', p.message || ''];
     sh.appendRow(row);
 
     const coming = p.attending !== 'Unable to attend';
@@ -35,7 +35,7 @@ function doPost(e) {
       '<p style="margin-top:18px"><a href="' + ss.getUrl() + '">Open the guest list</a></p></div>';
 
     const opts = { to: NOTIFY_EMAIL, subject: subject, htmlBody: html, name: 'Wedding RSVP' };
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) opts.replyTo = p.email;
+    if (p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) opts.replyTo = p.email;
     MailApp.sendEmail(opts);
 
     return json({ ok: true });
