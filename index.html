@@ -103,7 +103,7 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
 .intro .garden::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(ellipse 58% 52% at 50% 46%,transparent 36%,rgba(59,43,49,.28) 100%)}
 .intro.done{opacity:0;visibility:hidden}
-.intro-inner{position:relative;z-index:2;display:grid;justify-items:center;gap:28px;padding:28px 16px 24px;width:min(100%,840px)}
+.intro-inner{position:relative;z-index:2;display:grid;justify-items:center;gap:28px;padding:28px 16px 24px;width:min(100%,980px)}
 .intro-kicker{text-align:center;display:grid;justify-items:center;gap:0}
 .intro-kicker .caps{font-size:22px;letter-spacing:.24em;color:#3B2B31;font-weight:600;font-variant:normal;text-transform:uppercase;
   background:rgba(255,253,248,.92);padding:8px 20px;border-radius:999px;border:1px solid rgba(201,184,146,.55);
@@ -115,20 +115,29 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
 @media (max-height:820px){
   .intro-kicker .script{font-size:52px}
   .intro-inner{gap:14px}
-  .env{width:min(72vw,400px)}
+  .env{width:min(58vw,360px)}
 }
-.env{position:relative;width:min(86vw,500px);aspect-ratio:535/401;perspective:1400px}
+.env-stage{position:relative;width:100%;display:grid;place-items:center}
+.env-flower{position:absolute;z-index:3;height:128%;width:auto;pointer-events:none;user-select:none}
+.env-flower-l{left:-20%;top:8%}
+.env-flower-r{right:-22%;top:-6%}
+@media (max-width:640px){
+  .env-flower-l,.env-flower-r{height:112%}
+  .env-flower-l{left:-10%;top:10%}
+  .env-flower-r{right:-12%;top:2%}
+}
+.env{position:relative;z-index:1;width:min(52vw,460px);aspect-ratio:607/447;perspective:1400px}
 .env::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(#f7e4e7,#f0d0d5);clip-path:polygon(0 0,100% 0,50% 62%)}
+  background:linear-gradient(#f7e4e7,#f0d0d5);clip-path:polygon(0 0,100% 0,50% 67%)}
 .env-pocket{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;pointer-events:none;
-  clip-path:polygon(0 0,50% 62%,100% 0,100% 100%,0 100%);
+  clip-path:polygon(0 0,50% 67%,100% 0,100% 100%,0 100%);
   filter:drop-shadow(0 22px 28px rgba(120,70,80,.22))}
 .env-flap{position:absolute;inset:0;z-index:3;transform-origin:top center;transform:rotateX(0deg);
-  transform-style:preserve-3d;clip-path:polygon(0 0,100% 0,50% 62%)}
+  transform-style:preserve-3d;clip-path:polygon(0 0,100% 0,50% 67%)}
 .env-flap img{position:absolute;inset:0;width:100%;height:100%;display:block;backface-visibility:hidden}
 .env-flap::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,#f6d5d8 0%,#e7b7be 70%,#d9a8b0 100%);
-  clip-path:polygon(0 0,100% 0,50% 62%);transform:rotateX(180deg);backface-visibility:hidden}
+  clip-path:polygon(0 0,100% 0,50% 67%);transform:rotateX(180deg);backface-visibility:hidden}
 .intro.open .env-flap{animation:flap-open .9s cubic-bezier(.45,.05,.2,1) .24s forwards}
 @keyframes flap-open{
   0%{transform:rotateX(0deg);z-index:3}
@@ -145,15 +154,15 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   to{transform:translateY(-86%)}
 }
 .env-card .script{font-size:clamp(1.6rem,5vw,2.2rem)}
-.seal{position:absolute;left:50%;top:58.5%;z-index:4;width:22.1%;transform:translate(-50%,-50%);
-  border:0;padding:0;background:none;cursor:pointer;line-height:0;
-  filter:drop-shadow(0 8px 10px rgba(120,70,80,.28));
+.seal{position:absolute;left:50%;top:64%;z-index:4;width:27%;aspect-ratio:1;transform:translate(-50%,-50%);
+  appearance:none;-webkit-appearance:none;border:0;padding:0;margin:0;background:transparent;box-shadow:none;
+  -webkit-tap-highlight-color:transparent;cursor:pointer;line-height:0;color:transparent;
   transition:transform .4s ease,opacity .3s ease}
-.seal img{width:100%;height:auto;display:block;pointer-events:none}
+.seal img{width:100%;height:auto;display:block;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(120,70,80,.28))}
 .seal:hover{transform:translate(-50%,-50%) scale(1.05)}
 .seal:focus{outline:none}
 .seal:focus-visible{outline:2px solid rgba(158,61,104,.5);outline-offset:6px;border-radius:50%}
-.intro-hint{margin:2px 0 0;font-family:var(--caps);font-style:normal;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+.intro-hint{position:relative;z-index:5;margin:2px 0 0;font-family:var(--caps);font-style:normal;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
   font-size:.84rem;line-height:1;color:#3B2B31;background:#FFFDF8;padding:12px 22px;border-radius:999px;
   border:1px solid rgba(201,184,146,.75);box-shadow:0 10px 28px -14px rgba(59,43,49,.5),inset 0 1px 0 #fff}
 .intro .garden{z-index:0}
@@ -257,7 +266,7 @@ section.block.alt{background:#fff}
 .head{text-align:center;margin-bottom:48px}
 .head .script{font-size:clamp(2.8rem,8vw,4rem);display:block}
 .head p{max-width:52ch;margin:10px auto 0;color:var(--muted)}
-.garland{display:block;width:min(520px,90%);height:auto;margin:0 auto -8px}
+.garland{display:block;width:min(520px,90%);height:auto;margin:0 auto 18px}
 .sep{height:18px;background:repeating-linear-gradient(90deg,var(--blush) 0 12px,transparent 12px 26px);opacity:.8}
 
 /* story */
@@ -353,7 +362,8 @@ section.block.alt{background:#fff}
 .sponsors-col:first-of-type{text-align:right}
 .sponsors-col li{padding:9px 4px;border-bottom:1px solid rgba(235,203,209,.55);font-size:1.02rem}
 .sponsors-col li:last-child{border-bottom:0}
-.honor-name{margin:0;font-size:1.15rem}
+.honor-name{margin:0;font-family:var(--serif);font-size:1.15rem;font-weight:500;line-height:1.45}
+.flower-names li{border-bottom:0;padding:7px 4px;font-family:var(--serif);font-size:1.15rem;font-weight:500;line-height:1.45}
 .honor-pair h4{margin-bottom:10px}
 .bearer-col{display:grid;gap:22px}
 .bearer-col h3{margin-bottom:8px}
@@ -555,11 +565,15 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
       <span class="intro-rule" aria-hidden="true"></span>
       <p class="script">John Gerick <br> and <br> Ma. Elena</p>
     </div>
-    <div class="env">
-      <div class="env-card"><div><p class="caps">You're invited</p><p class="script">17 · July · 2027</p></div></div>
-      <img class="env-pocket" src="images/envelope/envelope.png" width="535" height="401" alt="">
-      <div class="env-flap" aria-hidden="true"><img src="images/envelope/envelope.png" width="535" height="401" alt=""></div>
-      <button class="seal" id="seal" aria-label="Open the invitation"><img src="images/envelope/wax.png" width="513" height="535" alt=""></button>
+    <div class="env-stage">
+      <div class="env">
+        <div class="env-card"><div><p class="caps">You're invited</p><p class="script">17 · July · 2027</p></div></div>
+        <img class="env-pocket" src="images/envelope/envelope.png?v=7" width="607" height="447" alt="">
+        <div class="env-flap" aria-hidden="true"><img src="images/envelope/envelope.png?v=7" width="607" height="447" alt=""></div>
+        <img class="env-flower env-flower-l" src="images/envelope/flower-left.png?v=7" width="484" height="1019" alt="">
+        <img class="env-flower env-flower-r" src="images/envelope/flower-right.png?v=7" width="542" height="993" alt="">
+        <button class="seal" id="seal" aria-label="Open the invitation"><img src="images/envelope/wax.png?v=7" width="285" height="285" alt=""></button>
+      </div>
     </div>
     <p class="intro-hint">Click the seal to open</p>
   </div>
@@ -685,7 +699,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="8" aria-hidden="true"></svg>
-      <span class="script">Where &amp; When</span>
+      <span class="script">Location Map Guide</span>
       <p>Saturday, 17 July 2027. The ceremony begins at 1:00 PM, and the reception follows right after.</p>
     </div>
     <div class="venues">
@@ -883,7 +897,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           <div class="sec-row">
             <p class="sec-man">Atty. Nicolas R. Kyamko III</p>
             <p class="sec-role">Cord</p>
-            <p class="sec-woman">Ms. Khristine Janee V. Melencio</p>
+            <p class="sec-woman">Ms. Khristine Jane V. Melencio</p>
           </div>
           <div class="sec-row">
             <p class="sec-man">Atty. Gerard N. Turiano</p>
@@ -953,7 +967,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           <div class="sponsors-rule" aria-hidden="true"></div>
           <div>
             <h3>Flower Girls</h3>
-            <ul class="sponsors-col">
+            <ul class="sponsors-col flower-names">
               <li>Mhizzy Loraine L. Orlain</li>
               <li>Akesha Janella O. Guloyani</li>
               <li>Raynier L. Palaña</li>
@@ -1058,16 +1072,16 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="52" aria-hidden="true"></svg>
-      <span class="script">FAQs</span>
+      <span class="script">Questions</span>
       <p>Anything else? Message us directly and we'll help.</p>
     </div>
     <div class="faq reveal">
       <details><summary>When should I arrive?</summary><p>Please arrive at The Manila Cathedral by 12:30 PM. The Mass begins promptly at 1:00 PM.</p></details>
-      <details><summary>Is there parking?</summary><p>Limited parking is available around Intramuros. We recommend carpooling or booking a ride. Palacio de Manila has parking for reception guests.</p></details>
+      <details><summary>Is there parking?</summary><p>Manila Cathedral: there is parking around. Palacio de Manila has parking for reception guests.</p></details>
       <details><summary>Can I bring a plus-one?</summary><p>We've reserved seats for the guests named on your invitation. Please enter your number of guests in the RSVP form.</p></details>
       <details><summary>Are children invited?</summary><p>We love your little ones, but apart from those in the entourage, this will be an adults-only celebration.</p></details>
       <details><summary>Can I take photos during the ceremony?</summary><p>We're having an unplugged ceremony. Please keep phones and cameras away during Mass so our photographers can capture every moment. Snap away at the reception!</p></details>
-      <details><summary>When is the RSVP deadline?</summary><p>Please reply by 17 May 2027 so we can finalize seating.</p></details>
+      <details><summary>When is the RSVP deadline?</summary><p>Please reply on or before February 7, 2027 so we can finalize seating.</p></details>
     </div>
   </div>
 </section>
@@ -1078,7 +1092,9 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="61" aria-hidden="true"></svg>
       <span class="script">Kindly Reply</span>
-      <p>We've saved a seat for you. Please let us know by 17 May 2027.</p>
+      <p>Kindly confirm your attendance on or before February 7, 2027 through RSVP form. Your timely response will help us make the necessary arrangements. 
+        <br> 
+        <br> We look forward to celebrating with you!</p>
     </div>
     <div class="rsvp-card reveal">
       <form id="rsvpForm" novalidate>
@@ -1094,12 +1110,12 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
         </div>
         <fieldset class="field">
           <legend>Are you attending?</legend>
+          <p class="field-note">Select every part of the day you'll join.</p>
           <div class="choice">
-            <label><input type="radio" name="attending" value="Church Only" required> Church Only</label>
-            <label><input type="radio" name="attending" value="Reception Only"> Reception Only</label>
-            <label><input type="radio" name="attending" value="After Party Only"> After Party Only</label>
-            <label><input type="radio" name="attending" value="All"> All</label>
-            <label><input type="radio" name="attending" value="Unable to attend"> Unable to attend</label>
+            <label><input type="checkbox" name="events" value="Church"> Church</label>
+            <label><input type="checkbox" name="events" value="Reception"> Reception</label>
+            <label><input type="checkbox" name="events" value="After Party"> After Party</label>
+            <label><input type="checkbox" name="events" value="Unable to attend"> Unable to attend</label>
           </div>
         </fieldset>
         <div class="field" id="groupField">
@@ -1331,7 +1347,7 @@ function hideLoader(){
     setTimeout(()=>loader.remove(),750);
   },hold);
 }
-const loaderAssets=["images/background-floral.jpg","images/logo/logo-pink.png?v=2"].map(src=>new Promise(resolve=>{
+const loaderAssets=["images/background-floral.jpg","images/logo/logo-pink.png?v=2","images/envelope/envelope.png?v=7","images/envelope/wax.png?v=7","images/envelope/flower-left.png?v=7","images/envelope/flower-right.png?v=7"].map(src=>new Promise(resolve=>{
   const img=new Image();
   img.onload=img.onerror=resolve;
   img.src=src;
@@ -1349,7 +1365,7 @@ seal.addEventListener("click",()=>{
 });
 // Direct links like /#rsvp skip the envelope
 if(location.hash && location.hash!=="#top"){intro.classList.add("done");document.body.classList.remove("locked")}
-else seal.focus({preventScroll:true});
+else if(matchMedia("(hover: hover) and (pointer: fine)").matches) seal.focus({preventScroll:true});
 
 /* ================= MUSIC ================= */
 const MUSIC_START_SEC=26;
@@ -1594,7 +1610,12 @@ const maxGuests=inviteCount("max",1,1,12);
 const maxKids=inviteCount("kids",0,0,8);
 
 function setStatus(msg,cls){status.textContent=msg;status.className="status "+(cls||"")}
-function selectedAttending(){return (form.querySelector('input[name="attending"]:checked')||{}).value||""}
+function eventInputs(){return [...form.querySelectorAll('input[name="events"]')]}
+function selectedAttending(){
+  const picked=eventInputs().filter(input=>input.checked).map(input=>input.value);
+  if(picked.includes("Unable to attend")) return "Unable to attend";
+  return picked.join(", ");
+}
 function nameInputs(container, count, label){
   const kept=[...container.querySelectorAll("input")].map(input=>input.value);
   container.innerHTML="";
@@ -1651,7 +1672,14 @@ fillCount(kidCountSelect, maxKids, 0);
 guestSelect.addEventListener("change", syncParty);
 kidCountSelect.addEventListener("change", syncParty);
 form.addEventListener("change", e=>{
-  if(e.target.name==="attending" || e.target.name==="bringingKids") syncParty();
+  if(e.target.name==="events"){
+    const decline=form.querySelector('input[name="events"][value="Unable to attend"]');
+    if(e.target.value==="Unable to attend" && e.target.checked){
+      eventInputs().forEach(input=>{if(input!==e.target) input.checked=false});
+    }else if(e.target.checked && decline) decline.checked=false;
+    syncParty();
+  }
+  if(e.target.name==="bringingKids") syncParty();
 });
 syncParty();
 
@@ -1661,6 +1689,8 @@ form.addEventListener("submit",async e=>{
   if(!data.get("name")?.trim()){setStatus("Enter your full name.","err");form.name.focus();return}
   const attending=selectedAttending();
   if(!attending){setStatus("Choose where you'll attend.","err");return}
+  data.set("attending", attending);
+  data.delete("events");
   if(!groupField.hidden && !groupSelect.value){setStatus("Select the group you belong to.","err");groupSelect.focus();return}
   const extra=[...guestNames.querySelectorAll("input")];
   if(extra.some(input=>!input.value.trim())){setStatus("Enter each guest's name.","err");extra.find(input=>!input.value.trim()).focus();return}

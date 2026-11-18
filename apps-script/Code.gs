@@ -56,7 +56,7 @@ function testSetup() {
   doPost({ parameter: {
     name: 'Test Guest',
     email: NOTIFY_EMAIL.split(',')[0].trim(),
-    attending: 'All',
+    attending: 'Church, Reception, After Party',
     guests: '2',
     guestNames: 'Alex Santos',
     children: '1',
