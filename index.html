@@ -287,15 +287,25 @@ section.block.alt{background:#fff}
 .story-close h3{font:400 clamp(2.2rem,6vw,3.1rem)/1.25 var(--script);color:var(--rose);margin-bottom:16px}
 .story-close p + p{margin-top:.85em}
 .story-close .note{margin-top:1.15em;font-style:italic;color:var(--muted)}
-.proposal{max-width:340px;margin:64px auto 0;text-align:center}
+.proposal{max-width:720px;margin:64px auto 0;text-align:center}
 .proposal h3{font:400 2.2rem/1 var(--script);color:var(--rose);margin-bottom:14px}
-.proposal-frame{display:block;border-radius:18px;overflow:hidden;line-height:0;
+.proposal-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.proposal-frame{display:grid;gap:12px;color:var(--rose-deep);text-decoration:none}
+.proposal-shot{position:relative;display:block;border-radius:18px;overflow:hidden;line-height:0;
   box-shadow:0 18px 40px -24px rgba(59,43,49,.5)}
-.proposal-frame img{width:100%;height:auto;display:block}
-.proposal-links{margin-top:14px;color:var(--muted)}
-.proposal-links a{color:var(--rose-deep);text-decoration:none;border-bottom:1px solid rgba(158,61,104,.35)}
-.proposal-links a:hover{color:var(--rose)}
+.proposal-shot img{width:100%;height:auto;display:block}
+.proposal-shot::after{content:"";position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;
+  border-radius:50%;background:rgba(20,16,18,.62);box-shadow:0 10px 24px rgba(20,16,18,.28)}
+.proposal-shot::before{content:"";position:absolute;z-index:1;left:50%;top:50%;margin:-11px 0 0 -7px;
+  border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff}
+.proposal-label{justify-self:center;width:fit-content;border-bottom:1px solid rgba(158,61,104,.35)}
+.proposal-frame:hover .proposal-label{color:var(--rose)}
+.proposal-meta{display:grid;justify-items:center;gap:4px}
+.proposal-owner{font-size:.82rem;line-height:1.3;color:var(--muted)}
 @media (max-width:640px){
+  .proposal-row{gap:12px}
+  .proposal-shot::after{width:46px;height:46px;margin:-23px 0 0 -23px}
+  .proposal-shot::before{margin:-8px 0 0 -5px;border-width:8px 0 8px 13px}
   .story::before{left:8px}
   .chapter{grid-template-columns:28px 1fr}
   .chapter .dot{grid-column:1 !important;margin:4px 0 0}
@@ -680,14 +690,20 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
       </article>
     </div>
     <div class="proposal reveal">
-      <h3>The proposal</h3>
-      <a class="proposal-frame" href="https://www.facebook.com/reel/1580211916430908" target="_blank" rel="noopener">
-        <img src="images/story/proposal.jpg" width="505" height="900" alt="John proposing to Elena at the In Between concert. Play the video.">
-      </a>
-      <p class="proposal-links">Watch on <a href="https://www.facebook.com/reel/1580211916430908" target="_blank" rel="noopener">Facebook</a> or <a href="https://www.tiktok.com/@notyourfloat/video/7604714165013417237" target="_blank" rel="noopener">TikTok</a></p>
+      <h3>The Proposal</h3>
+      <div class="proposal-row">
+        <a class="proposal-frame" href="https://vt.tiktok.com/ZSpV3t8Go/" target="_blank" rel="noopener">
+          <span class="proposal-shot"><img src="images/story/proposal-tiktok.jpg?v=2" width="720" height="1280" alt="John and Elena at the In Between concert, at the two-second mark. Play the TikTok video."></span>
+          <span class="proposal-meta"><span class="proposal-label">TikTok</span><span class="proposal-owner">Cornerstone Entertainment</span></span>
+        </a>
+        <a class="proposal-frame" href="https://www.facebook.com/reel/1580211916430908" target="_blank" rel="noopener">
+          <span class="proposal-shot"><img src="images/story/proposal-facebook.jpg" width="540" height="960" alt="John and Elena embracing at the In Between concert. Play the Facebook video."></span>
+          <span class="proposal-meta"><span class="proposal-label">Facebook</span><span class="proposal-owner">Cornerstone Entertainment</span></span>
+        </a>
+      </div>
     </div>
     <div class="story-close reveal">
-      <h3>And now, forever.</h3>
+      <h3>And now, Forever.</h3>
       <p>From our first hello to this beautiful new beginning, we're excited for a lifetime of love, laughter, adventures, and choosing each other.</p>
       <p class="note">Our favorite journey is the one we take together.</p>
     </div>
@@ -746,8 +762,8 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="14" aria-hidden="true"></svg>
-      <span class="script">The Day</span>
-      <p>An outline of the afternoon, so you know where to be.</p>
+      <span class="script">Love in Full Bloom</span>
+      <p>As our forever begins to bloom, here is how the afternoon will unfold.</p>
     </div>
     <ol class="program reveal">
       <li><time>12:30 PM</time><div><strong>Arrival of the Guests</strong><span>The Manila Cathedral. Please be seated by 12:50.</span></div></li>
@@ -987,8 +1003,8 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="33" aria-hidden="true"></svg>
-      <span class="script">Moments</span>
-      <p>A few of our favorite photos together.</p>
+      <span class="script">Before the Vows</span>
+      <p>A glimpse of our love in bloom before we walk down the aisle.</p>
     </div>
   </div>
   <div class="carousel reveal" id="carousel">
