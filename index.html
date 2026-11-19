@@ -202,6 +202,8 @@ g.sway{animation:sway var(--d,10s) ease-in-out infinite;transform-box:fill-box;t
   .loader-bf-2{transform:translate(-146px,8px)}
   .loader-bf-3{transform:translate(146px,24px)}
 }
+.rsvp-loading{z-index:240}
+.rsvp-loading p{font:400 clamp(2.2rem,6vw,2.8rem)/1.2 var(--script);color:var(--rose);text-align:center;padding:0 24px}
 
 /* ---------- NAV ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,250,248,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
@@ -472,6 +474,7 @@ body:has(.lightbox.open) .carousel-btn{visibility:hidden}
 .faq details p{padding:0 4px 20px;color:var(--muted)}
 .faq details ul{margin:0 4px 20px;padding-left:1.15em;color:var(--muted)}
 .faq details li + li{margin-top:.7em}
+.faq-foot{max-width:52ch;margin:36px auto 0;text-align:center;color:var(--muted)}
 
 /* rsvp */
 .rsvp-card{position:relative;max-width:640px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,5vw,44px)}
@@ -540,6 +543,15 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <span class="loader-bf loader-bf-2" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
     <span class="loader-bf loader-bf-3" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
   </div>
+</div>
+<div class="loader rsvp-loading" id="rsvpLoading" hidden role="status" aria-live="polite" aria-label="Sending your RSVP">
+  <div class="loader-mark">
+    <img class="loader-logo" src="images/logo/logo-pink.png?v=2" alt="">
+    <span class="loader-bf" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#F4A7B9" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#C4B5E0" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#F4A7B9" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#C4B5E0" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+    <span class="loader-bf loader-bf-2" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#F6BE98" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F4A7B9" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+    <span class="loader-bf loader-bf-3" aria-hidden="true"><svg viewBox="0 0 50 40"><g class="wing wing-l"><ellipse cx="14" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="12" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><g class="wing wing-r"><ellipse cx="36" cy="14" rx="13" ry="12" fill="#B7A6E0" fill-opacity=".9"/><ellipse cx="38" cy="26" rx="9" ry="8" fill="#F9D3DB" fill-opacity=".85"/></g><ellipse cx="25" cy="20" rx="2.1" ry="11" fill="#3B2B31"/><circle cx="25" cy="8" r="1.5" fill="#3B2B31"/></svg></span>
+  </div>
+  <p>Sending your RSVP</p>
 </div>
 <script>window.__loaderAt=Date.now()</script>
 <audio id="bgMusic" preload="metadata" src="audio/background.mp3"></audio>
@@ -1056,7 +1068,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="carousel-foot">
       <span class="carousel-count" id="carouselCount" aria-live="polite">01</span>
       <span class="carousel-bar" aria-hidden="true"><span id="carouselBar"></span></span>
-      <span class="carousel-total">34</span>
+      <span class="carousel-total">30</span>
     </div>
     <div class="carousel-thumbs" id="carouselThumbs" aria-label="Choose a photo"></div>
   </div>
@@ -1094,7 +1106,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="52" aria-hidden="true"></svg>
       <span class="script">Notes &amp; Details</span>
-      <p>Quick reminders as you get ready to celebrate with us. <br> Anything else? Message us directly and we'll gladly help.</p>
+      <p>Quick reminders as you get ready to celebrate with us.</p>
     </div>
     <div class="faq reveal">
       <details><summary>Arrival Time</summary><p>We kindly request that guests arrive at Manila Cathedral by 12:30 PM, as the Nuptial Mass will commence promptly at 1:00 PM.</p></details>
@@ -1107,6 +1119,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
       <details><summary>Ceremony Photos</summary><p>We are hosting an unplugged ceremony and kindly ask that all mobile devices and cameras be silenced and kept away during the Nuptial Mass, allowing our photography team to capture every sacred moment. You are warmly invited to take as many photographs as you wish during the reception.</p></details>
       <details><summary>RSVP Deadline</summary><p>Kindly submit your RSVP on or before 07 February 2027, so we can finalize our seating arrangements. Please note that we can only reserve seats for guests who confirm their attendance by this date.</p></details>
     </div>
+    <p class="faq-foot reveal">Anything else? Message us directly and we'll gladly help.</p>
   </div>
 </section>
 
@@ -1115,10 +1128,10 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
   <div class="wrap">
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="61" aria-hidden="true"></svg>
-      <span class="script">Celebrate Our Blessing <br> Save a Seat for Love ❤️</span>
-      <p>We have prayed and waited for this day, and having the people we love most by our side means everything to us! <br>Kindly confirm your attendance on or before 07 February 2027 via the RSVP form to help us finalize our seating arrangements.
-      
-        <br><br>  We cannot wait to welcome you, share in this blessing, and celebrate our forever together!</p>
+      <span class="script">Save a Seat for Love ❤️</span>
+      <p>The countdown to our forever begins, and it wouldn't be the same without you!</p>
+      <p>Please RSVP on or before 07 February 2027.</p>
+      <p>We cannot wait to welcome you, <br> share in this blessing, and celebrate our forever together!</p>
     </div>
     <div class="rsvp-card reveal">
       <form id="rsvpForm" novalidate>
@@ -1707,6 +1720,9 @@ form.addEventListener("change", e=>{
 });
 syncParty();
 
+const rsvpLoading=document.getElementById("rsvpLoading");
+function setRsvpLoading(on){if(rsvpLoading) rsvpLoading.hidden=!on}
+
 form.addEventListener("submit",async e=>{
   e.preventDefault();
   const data=new FormData(form);
@@ -1727,15 +1743,17 @@ form.addEventListener("submit",async e=>{
   if(guestCountField.hidden) data.set("guests","1");
   if(!RSVP_ENDPOINT){setStatus("RSVP isn't connected yet. Add the Apps Script URL in index.html (see README).","err");return}
 
-  btn.disabled=true;btn.textContent="Sending…";setStatus("");
+  btn.disabled=true;setRsvpLoading(true);setStatus("");
   try{
     const res=await fetch(RSVP_ENDPOINT,{method:"POST",body:new URLSearchParams(data)});
     const out=await res.json().catch(()=>({ok:res.ok}));
     if(!out.ok) throw new Error(out.error||"Request failed");
     const first=data.get("name").trim().split(" ")[0];
     const coming=attending!=="Unable to attend";
+    setRsvpLoading(false);
     form.parentElement.innerHTML=`<div class="thanks"><p class="script">Thank you, ${first.replace(/[<>&]/g,"")}!</p><p>${coming?"Your RSVP has been sent.<br>We can't wait to see you on 17 July 2027.":"Your RSVP has been sent.<br>We'll miss you, and thank you for letting us know."}</p></div>`;
   }catch(err){
+    setRsvpLoading(false);
     btn.disabled=false;btn.textContent="Send RSVP";
     setStatus("Your RSVP didn't go through. Check your connection and try again.","err");
   }

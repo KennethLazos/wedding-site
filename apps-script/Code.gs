@@ -6,7 +6,8 @@
 
 const NOTIFY_EMAIL = 'dev.lazoskenneth@gmail.com, barrocanmaelena@gmail.com';
 const SHEET_NAME   = 'RSVPs';
-const HEADERS = ['Timestamp', 'Name', 'Email', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Group', 'Dietary needs', 'Message'];
+const HEADERS = ['Timestamp', 'Name', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Group', 'Dietary needs', 'Message'];
+const WITH_EMAIL_HEADERS = ['Timestamp', 'Name', 'Email', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Group', 'Dietary needs', 'Message'];
 const PREVIOUS_PARTY_HEADERS = ['Timestamp', 'Name', 'Email', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Dietary needs', 'Message'];
 const PREVIOUS_HEADERS = ['Timestamp', 'Name', 'Email', 'Mobile', 'Attending', 'Guests', 'Dietary needs', 'Message'];
 
@@ -20,7 +21,7 @@ function doPost(e) {
 
     const ss = getSpreadsheet();
     const sh = ensureSheet(ss);
-    const row = [new Date(), p.name, p.email || '', p.phone || '', p.attending, p.guests || '1', p.guestNames || '', p.children || '', p.kidNames || '', p.group || '', p.dietary || '', p.message || ''];
+    const row = [new Date(), p.name, p.phone || '', p.attending, p.guests || '1', p.guestNames || '', p.children || '', p.kidNames || '', p.group || '', p.dietary || '', p.message || ''];
     sh.appendRow(row);
 
     const coming = p.attending !== 'Unable to attend';
@@ -34,9 +35,7 @@ function doPost(e) {
       '<table style="border-collapse:collapse">' + rows + '</table>' +
       '<p style="margin-top:18px"><a href="' + ss.getUrl() + '">Open the guest list</a></p></div>';
 
-    const opts = { to: NOTIFY_EMAIL, subject: subject, htmlBody: html, name: 'Wedding RSVP' };
-    if (p.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) opts.replyTo = p.email;
-    MailApp.sendEmail(opts);
+    MailApp.sendEmail({ to: NOTIFY_EMAIL, subject: subject, htmlBody: html, name: 'Wedding RSVP' });
 
     return json({ ok: true });
   } catch (err) {
@@ -55,7 +54,6 @@ function doGet() {
 function testSetup() {
   doPost({ parameter: {
     name: 'Test Guest',
-    email: NOTIFY_EMAIL.split(',')[0].trim(),
     attending: 'Church, Reception, After Party',
     guests: '2',
     guestNames: 'Alex Santos',
@@ -81,6 +79,8 @@ function ensureSheet(ss) {
   if (matches(HEADERS)) return sh;
   if (matches(PREVIOUS_PARTY_HEADERS)) sh.insertColumnsBefore(10, 1);
   else if (matches(PREVIOUS_HEADERS)) sh.insertColumnsBefore(7, 4);
+  const after = sh.getRange(1, 1, 1, Math.max(sh.getLastColumn(), 1)).getValues()[0].map(function (cell) { return String(cell); });
+  if (after[2] === 'Email' || matches(WITH_EMAIL_HEADERS)) sh.deleteColumn(3);
   sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
   sh.setFrozenRows(1);
   return sh;
