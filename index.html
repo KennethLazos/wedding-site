@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  if(new URLSearchParams(location.search).get("v")!=="full") document.documentElement.classList.add("parents-only");
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ma. Elena &amp; John Gerick · 17 July 2027</title>
@@ -363,6 +368,7 @@ section.block.alt{background:#fff}
 
 /* entourage */
 .ent{max-width:920px;margin:0 auto;display:grid;gap:48px;text-align:center}
+html.parents-only .party-rest{display:none !important}
 .ent h3{font:400 2.1rem/1 var(--script);color:var(--rose);margin-bottom:18px}
 .ent .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px 40px}
 .ent .pair > div h4{margin-bottom:6px}
@@ -848,7 +854,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     <div class="head reveal">
       <svg class="garland" data-flora="garland" data-seed="27" aria-hidden="true"></svg>
       <span class="script">The Entourage</span>
-      <p>The family and friends standing with us.</p>
+      <p id="entourageLead">The family and friends standing with us.</p>
     </div>
     <div class="ent">
       <div class="reveal">
@@ -857,7 +863,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           <div><h3>Parents of the Bride</h3><ul><li>Mr. Reynaldo R. Barrocan</li><li>Mrs. Erlinda S. Barrocan</li></ul></div>
         </div>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <h3>Principal Sponsors</h3>
         <div class="sponsors">
           <ul class="sponsors-col">
@@ -899,11 +905,11 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           </ul>
         </div>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <h3>Matron of Honor</h3>
         <p class="honor-name">Ms. Ma. Angela Dackel-Hilario</p>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <div class="sponsors honor-pair">
           <div>
             <h3>Bestmen</h3>
@@ -922,7 +928,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           </div>
         </div>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <h3>Secondary Sponsors</h3>
         <div class="sec-sponsors">
           <div class="sec-row">
@@ -942,7 +948,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           </div>
         </div>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <div class="sponsors honor-pair">
           <div>
             <h3>Groomsmen</h3>
@@ -981,7 +987,7 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
           </div>
         </div>
       </div>
-      <div class="reveal">
+      <div class="reveal party-rest">
         <div class="sponsors honor-pair">
           <div class="bearer-col">
             <div>
@@ -1012,6 +1018,13 @@ footer small{display:block;margin-top:30px;color:var(--muted)}
     </div>
   </div>
 </section>
+<script>
+if(document.documentElement.classList.contains("parents-only")){
+  document.querySelectorAll("#entourage .party-rest").forEach(function(el){el.remove()});
+  var lead=document.getElementById("entourageLead");
+  if(lead) lead.textContent="The family standing with us.";
+}
+</script>
 
 <!-- ============ GALLERY ============ -->
 <section class="block alt" id="gallery">
