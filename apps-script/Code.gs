@@ -4,7 +4,7 @@
  * Setup steps are in README.md.
  */
 
-const NOTIFY_EMAIL = 'dev.lazoskenneth@gmail.com, barrocanmaelena@gmail.com';
+const NOTIFY_EMAIL = 'dev.lazoskenneth@gmail.com, barrocanmaelena@gmail.com, mescalladozaira@gmail.com, danjconcepcion@gmail.com';
 const SHEET_NAME   = 'RSVPs';
 const HEADERS = ['Timestamp', 'Name', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Group', 'Dietary needs', 'Message'];
 const WITH_EMAIL_HEADERS = ['Timestamp', 'Name', 'Email', 'Mobile', 'Attending', 'Guests', 'Guest names', 'Children', 'Children names', 'Group', 'Dietary needs', 'Message'];
